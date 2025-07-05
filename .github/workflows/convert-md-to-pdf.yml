@@ -1,0 +1,250 @@
+name: Convert Markdown to PDF
+
+on:
+  push:
+    branches: [ main, master ]
+    paths: 
+      - '*.md'
+      - 'DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md'
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  convert-to-pdf:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Pandoc
+      uses: r-lib/actions/setup-pandoc@v2
+      with:
+        pandoc-version: '3.1.8'
+        
+    - name: Install LaTeX
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+        
+    - name: Create Custom CSS for Syntax Highlighting
+      run: |
+        cat > custom-style.css << 'EOF'
+        /* Base styling */
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: white;
+            max-width: none;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Headers */
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            page-break-after: avoid;
+        }
+
+        h1 { font-size: 2.5rem; border-bottom: 3px solid #3498db; padding-bottom: 0.5rem; }
+        h2 { font-size: 2rem; border-bottom: 2px solid #95a5a6; padding-bottom: 0.3rem; }
+        h3 { font-size: 1.5rem; color: #34495e; }
+
+        /* Code blocks dengan background hitam */
+        pre {
+            background-color: #1e1e1e !important;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            page-break-inside: avoid;
+        }
+
+        code {
+            background-color: #1e1e1e !important;
+            color: #d4d4d4;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Inline code */
+        p code, li code {
+            background-color: #f8f9fa !important;
+            color: #e83e8c;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+
+        /* Syntax highlighting colors */
+        .sourceCode .kw { color: #c586c0; font-weight: bold; }  /* Keywords (ungu) */
+        .sourceCode .dt { color: #4ec9b0; }  /* Data types */
+        .sourceCode .dv, .sourceCode .bn, .sourceCode .fl { color: #b5cea8; }  /* Numbers */
+        .sourceCode .ch, .sourceCode .st { color: #ce9178; }  /* Strings */
+        .sourceCode .co { color: #6a9955; font-style: italic; }  /* Comments */
+        .sourceCode .ot { color: #dcdcaa; }  /* Other */
+        .sourceCode .al { color: #f44747; font-weight: bold; }  /* Alert */
+        .sourceCode .fu { color: #dcdcaa; }  /* Functions */
+        .sourceCode .er { color: #f44747; }  /* Errors */
+        .sourceCode .at { color: #92c5f7; }  /* Attributes */
+        .sourceCode .cf { color: #c586c0; font-weight: bold; }  /* Control flow */
+
+        /* HTML/CSS specific highlighting */
+        .sourceCode .dt { color: #f9c74f; }  /* HTML tags (oranye kekuningan) */
+        .sourceCode .an { color: #92c5f7; }  /* Attribute names */
+
+        /* Screenshot markers styling */
+        p strong:first-child {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            display: block;
+            margin: 2rem 0 1rem 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            page-break-after: avoid;
+        }
+
+        /* Tables */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5rem 0;
+            border: 1px solid #ddd;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        /* Links */
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blockquotes */
+        blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Page breaks */
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* Prevent widows and orphans */
+        p, li {
+            orphans: 3;
+            widows: 3;
+        }
+
+        /* Emoji support */
+        .emoji {
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+        }
+        EOF
+        
+    - name: Convert MD to PDF with Styling
+      run: |
+        pandoc "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" \
+          -o "Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf" \
+          --from markdown \
+          --to pdf \
+          --pdf-engine=xelatex \
+          --highlight-style=breezedark \
+          --css=custom-style.css \
+          --toc \
+          --toc-depth=3 \
+          --number-sections \
+          -V geometry:margin=2.5cm \
+          -V mainfont="Arial" \
+          -V monofont="Consolas" \
+          -V fontsize=11pt \
+          -V linestretch=1.2 \
+          -V papersize=a4 \
+          -V documentclass=article \
+          --metadata title="Dokumentasi Website Portfolio Rafi Pramana Putra" \
+          --metadata author="Rafi Pramana Putra" \
+          --metadata date="$(date +'%B %Y')"
+          
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: pdf-v${{ github.run_number }}
+        release_name: "Documentation PDF v${{ github.run_number }}"
+        body: |
+          📄 **Dokumentasi Portfolio Website - PDF Version**
+          
+          🚀 **Generated automatically from Markdown**
+          
+          ✨ **Features:**
+          - Professional styling dengan syntax highlighting
+          - Background hitam untuk code blocks  
+          - Warna ungu untuk keywords
+          - Warna oranye kekuningan untuk HTML tags
+          - Table of contents dengan numbering
+          - Responsive layout untuk print
+          
+          📅 **Generated on:** $(date +'%Y-%m-%d %H:%M:%S UTC')
+          🔄 **Commit:** ${{ github.sha }}
+          
+        draft: false
+        prerelease: false
+        
+    - name: Upload PDF to Release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf
+        asset_name: Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf
+        asset_content_type: application/pdf
+        
+    - name: Upload PDF as Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentation-pdf
+        path: Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf
+        retention-days: 90
