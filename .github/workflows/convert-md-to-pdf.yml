@@ -36,7 +36,13 @@ jobs:
         # Only install if not cached
         if ! command -v xelatex &> /dev/null; then
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-fonts-recommended texlive-xetex texlive-latex-extra
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base \
+            texlive-fonts-recommended \
+            texlive-xetex \
+            texlive-latex-extra \
+            lmodern \
+            cm-super
           sudo apt-get install -y --no-install-recommends fonts-dejavu-core
         fi
         
@@ -47,52 +53,31 @@ jobs:
     - name: Create LaTeX Header for Code Blocks
       run: |
         cat > latex-header.tex << 'EOF'
-        % LaTeX packages for better code handling - ORDER MATTERS!
+        % Essential packages for code handling
         \usepackage{xcolor}
         \usepackage{fancyvrb}
-        \usepackage{listings}
-        \usepackage{fvextra}
         
-        % Define colors first
+        % Define colors for syntax highlighting
         \definecolor{codebackground}{RGB}{30, 30, 30}
         \definecolor{codetext}{RGB}{212, 212, 212}
         \definecolor{keywordcolor}{RGB}{197, 134, 192}
         \definecolor{stringcolor}{RGB}{206, 145, 120}
         \definecolor{commentcolor}{RGB}{106, 153, 85}
         
-        % Configure fancyvrb for better code blocks
+        % Configure fancyvrb for code blocks with line breaking
         \fvset{
           breaklines=true,
           breakanywhere=true,
           fontsize=\small,
-          frame=single,
-          framesep=3mm,
-          rulecolor=\color{gray}
+          commandchars=\\\{\}
         }
         
-        % Configure listings for syntax highlighting
-        \lstset{
-          basicstyle=\ttfamily\small\color{codetext},
-          backgroundcolor=\color{codebackground},
-          frame=single,
-          framesep=3mm,
-          rulecolor=\color{gray},
-          breaklines=true,
-          breakatwhitespace=true,
-          showstringspaces=false,
-          keywordstyle=\color{keywordcolor}\bfseries,
-          commentstyle=\color{commentcolor}\itshape,
-          stringstyle=\color{stringcolor}
-        }
-        
-        % Override Pandoc's default Shaded environment for code blocks
+        % Override Pandoc's Highlighting environment
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
           breaklines=true,
           breakanywhere=true,
           fontsize=\small,
-          frame=single,
-          framesep=3mm,
-          rulecolor=\color{gray}
+          commandchars=\\\{\}
         }
         EOF
         
