@@ -25,6 +25,7 @@
 - **Database:** SQLite (development) / MySQL (production)
 - **Build Tool:** Vite 6.2.4
 - **Lisensi:** MIT
+- **Auto-PDF Generation:** ✅ GitHub Actions Workflow Active
 
 ### 1.2 Latar Belakang Pembuatan
 Website ini dikembangkan sebagai platform portofolio digital untuk **Rafi Pramana Putra**, seorang mahasiswa hukum di Universitas Brawijaya dan pemimpin komunitas. Website ini bertujuan untuk:
