@@ -52,6 +52,12 @@ public function index()
 }
 ```
 
+**Penjelasan Code:**
+- Route `'/'` mendefinisikan URL homepage yang akan menjalankan method `index()` dari `PortofolioController`
+- Menggunakan named route `'portofolio.home'` untuk memudahkan referensi dalam aplikasi
+- Method `index()` pada controller hanya mengembalikan view `'portofolio'` yang akan merender file `resources/views/portofolio.blade.php`
+- Struktur ini mengikuti pattern MVC Laravel dimana route mengarahkan ke controller, dan controller mengembalikan view
+
 ---
 
 ## STRUKTUR FOLDER DAN ARSITEKTUR
@@ -81,6 +87,16 @@ laravel/
 ├── public/                 # Public assets
 └── storage/               # File storage
 ```
+
+**Penjelasan Struktur:**
+- **app/Http/Controllers/**: Menyimpan semua controller aplikasi yang menangani business logic dan request handling
+- **app/Models/**: Berisi Eloquent models untuk interaksi dengan database menggunakan ORM Laravel
+- **resources/views/**: Template Blade untuk presentation layer, termasuk layout dan komponen UI
+- **resources/css/ & resources/js/**: Asset frontend yang akan diproses oleh Vite build tool
+- **database/migrations/**: Schema database dalam bentuk kode PHP untuk version control database
+- **routes/web.php**: Definisi semua web routes beserta middleware dan controller mapping
+- **public/**: Direktori yang dapat diakses langsung dari web server, berisi compiled assets
+- **storage/**: Penyimpanan file aplikasi seperti logs, cache, dan uploaded files
 
 ### 2.2 Arsitektur MVC
 Aplikasi menggunakan arsitektur Model-View-Controller (MVC) Laravel dengan komponen:
@@ -112,6 +128,16 @@ Aplikasi menggunakan arsitektur Model-View-Controller (MVC) Laravel dengan kompo
 }
 ```
 
+**Penjelasan Dependencies:**
+- **"require"**: Dependencies yang diperlukan untuk production environment
+  - **PHP ^8.2**: Minimum versi PHP yang diperlukan untuk menjalankan Laravel 12.0
+  - **Laravel Framework ^12.0**: Core framework dengan semua fitur dan security patches terbaru
+  - **Laravel Tinker ^2.10.1**: REPL (Read-Eval-Print Loop) untuk debugging dan testing code secara interaktif
+- **"require-dev"**: Dependencies hanya untuk development environment
+  - **Faker**: Library untuk generate dummy data dalam testing dan seeding
+  - **Laravel Pail**: Tool untuk real-time log monitoring
+  - **PHPUnit**: Testing framework untuk unit dan feature testing
+
 - **Laravel Framework 12.0**: Core framework dengan fitur terbaru
 - **Laravel Tinker**: Interactive shell untuk debugging
 - **PHPUnit**: Testing framework untuk unit testing
@@ -121,16 +147,75 @@ Aplikasi menggunakan arsitektur Model-View-Controller (MVC) Laravel dengan kompo
 ### 3.2 Frontend Dependencies (NPM)
 **[SCREENSHOT BAGIAN: File package.json terbuka di editor, fokus pada devDependencies]**
 
-- **TailwindCSS 4.0**: Utility-first CSS framework untuk styling
-- **Vite 6.2.4**: Modern build tool dengan hot module replacement
-- **Laravel Vite Plugin**: Integrasi Vite dengan Laravel
-- **Axios**: HTTP client untuk AJAX requests
-- **Concurrently**: Menjalankan multiple commands secara bersamaan
+```json
+{
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "vite": "^6.2.4",
+        "laravel-vite-plugin": "^1.0.0",
+        "tailwindcss": "^4.0.0",
+        "axios": "^1.8.2",
+        "postcss": "^8.4.35",
+        "autoprefixer": "^10.4.16"
+    }
+}
+```
+
+**Penjelasan Frontend Dependencies:**
+- **Scripts untuk Development**:
+  - **"dev"**: Menjalankan Vite development server dengan hot reload
+  - **"build"**: Build production assets dengan minifikasi dan optimasi
+  - **"preview"**: Preview production build secara lokal
+- **Development Dependencies**:
+  - **Vite ^6.2.4**: Modern build tool yang sangat cepat dengan Hot Module Replacement (HMR)
+  - **Laravel Vite Plugin**: Plugin khusus untuk integrasi Vite dengan Laravel asset management
+  - **TailwindCSS ^4.0.0**: Utility-first CSS framework untuk rapid UI development
+  - **Axios ^1.8.2**: Promise-based HTTP client untuk AJAX requests ke backend
+  - **PostCSS & Autoprefixer**: CSS processing tools untuk browser compatibility
 
 ### 3.3 Build Configuration
 **[SCREENSHOT BAGIAN: File vite.config.js di editor menunjukkan konfigurasi Laravel plugin]**
 
-Vite dikonfigurasi untuk handle CSS dan JavaScript bundling dengan Laravel plugin, support hot reload, dan optimasi untuk production build.
+```javascript
+// vite.config.js
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js'
+            ],
+            refresh: true,
+        }),
+    ],
+    build: {
+        outDir: 'public/build',
+        manifest: true,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vendor: ['axios']
+                }
+            }
+        }
+    }
+});
+```
+
+**Penjelasan Konfigurasi Vite:**
+- **Laravel Plugin**: Plugin khusus yang mengintegrasikan Vite dengan Laravel asset pipeline
+- **Input Files**: Entry points untuk CSS (`app.css`) dan JavaScript (`app.js`) yang akan di-bundle
+- **Refresh: true**: Mengaktifkan full-page refresh ketika Blade templates berubah
+- **Build Output**: Assets hasil build disimpan di `public/build/` directory
+- **Manifest**: Generate manifest.json untuk asset versioning dan cache busting
+- **Manual Chunks**: Memisahkan vendor libraries (seperti Axios) ke chunk terpisah untuk optimasi caching
 
 ---
 
@@ -139,12 +224,61 @@ Vite dikonfigurasi untuk handle CSS dan JavaScript bundling dengan Laravel plugi
 ### 4.1 Model User
 **[SCREENSHOT BAGIAN: File app/Models/User.php terbuka di editor, tunjukkan class structure dan properties]**
 
-Model default Laravel untuk user authentication dengan fields name, email, dan password. Menggunakan HasFactory trait untuk testing dan Notifiable untuk notifications.
+```php
+<?php
+// app/Models/User.php
+namespace App\Models;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class User extends Authenticatable
+{
+    use HasFactory, Notifiable;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+}
+```
+
+**Penjelasan Model User:**
+- **Extends Authenticatable**: Model ini inherit dari `Authenticatable` untuk fitur authentication Laravel
+- **Traits**: 
+  - `HasFactory` untuk testing dan seeding
+  - `Notifiable` untuk sistem notifikasi email/SMS
+- **Fillable Fields**: Mass assignment protection hanya untuk name, email, dan password
+- **Hidden Fields**: Password dan remember_token disembunyikan dari JSON serialization untuk keamanan
+- **Casts**: Automatic casting untuk `email_verified_at` ke datetime dan `password` ke hashed format
 
 ### 4.2 Model Project
 **[SCREENSHOT BAGIAN: File app/Models/Project.php di editor, tunjukkan fillable array dan methods]**
 
 ```php
+<?php
+// app/Models/Project.php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Project extends Model
 {
     use HasFactory, SoftDeletes;
@@ -166,32 +300,146 @@ class Project extends Model
     public function scopeByType($query, $type) {
         return $query->where('type', $type);
     }
+
+    public function scopeOrdered($query) {
+        return $query->orderBy('sort_order')->orderBy('created_at', 'desc');
+    }
+
+    public function getGradientClassAttribute() {
+        return "from-{$this->gradient_from} to-{$this->gradient_to}";
+    }
 }
 ```
 
-Model utama untuk mengelola proyek, pengalaman, dan organisasi dengan fitur:
-- **Soft Delete**: Menggunakan SoftDeletes trait untuk keamanan data
-- **Mass Assignment**: Fillable fields untuk title, description, icon, gradient colors, tags, type, duration, location, link, status, dan sort order
-- **Scopes**: Method untuk filter active items, by type, dan ordering
-- **Accessors**: Gradient class generator dan tags formatting
+**Penjelasan Model Project:**
+- **SoftDeletes Trait**: Implementasi soft delete untuk keamanan data, item tidak dihapus permanen
+- **Fillable Array**: Mass assignment protection untuk semua field yang dibutuhkan project
+- **Casts**: 
+  - `tags` dicast ke array untuk menyimpan multiple tags
+  - `is_active` dicast ke boolean untuk status aktif/non-aktif
+- **Query Scopes**:
+  - `scopeActive()`: Filter hanya project yang aktif
+  - `scopeByType()`: Filter berdasarkan tipe (project/experience/organization)
+  - `scopeOrdered()`: Sorting berdasarkan sort_order dan tanggal terbaru
+- **Accessor**: `getGradientClassAttribute()` generates TailwindCSS gradient classes untuk styling
 
 ### 4.3 Model Contact
 **[SCREENSHOT BAGIAN: File app/Models/Contact.php di editor, fokus pada scopes dan fillable]**
 
-Model untuk mengelola pesan kontak dengan fitur:
-- **Status Tracking**: Unread, read, replied status
-- **Scopes**: Filter berdasarkan status pesan
-- **Timestamps**: Automatic created_at dan updated_at
-- **Mark as Read**: Method untuk mengubah status pesan
+```php
+<?php
+// app/Models/Contact.php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Contact extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'email', 
+        'subject',
+        'message',
+        'status'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
+
+    public function scopeUnread($query) {
+        return $query->where('status', 'unread');
+    }
+
+    public function scopeRead($query) {
+        return $query->where('status', 'read');
+    }
+
+    public function scopeReplied($query) {
+        return $query->where('status', 'replied');
+    }
+
+    public function markAsRead() {
+        $this->update(['status' => 'read']);
+    }
+
+    public function markAsReplied() {
+        $this->update(['status' => 'replied']);
+    }
+}
+```
+
+**Penjelasan Model Contact:**
+- **Fillable Fields**: Semua field yang diperlukan untuk form kontak (name, email, subject, message, status)
+- **Casts**: Automatic casting untuk timestamps agar mudah di-format
+- **Query Scopes**:
+  - `scopeUnread()`: Filter pesan yang belum dibaca
+  - `scopeRead()`: Filter pesan yang sudah dibaca
+  - `scopeReplied()`: Filter pesan yang sudah dibalas
+- **Helper Methods**:
+  - `markAsRead()`: Update status pesan menjadi 'read'
+  - `markAsReplied()`: Update status pesan menjadi 'replied'
 
 ### 4.4 Model Admin
 **[SCREENSHOT BAGIAN: File app/Models/Admin.php di editor, tunjukkan inheritance dari Authenticatable]**
 
-Model untuk authentication admin panel dengan:
-- **Username Auth**: Menggunakan username instead of email
-- **Password Hashing**: Automatic password hashing
-- **Last Login**: Track login terakhir admin
-- **Session Management**: Support untuk Laravel Auth system
+```php
+<?php
+// app/Models/Admin.php
+namespace App\Models;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Hash;
+
+class Admin extends Authenticatable
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'username',
+        'password',
+        'last_login'
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'last_login' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+
+    public function getAuthIdentifierName()
+    {
+        return 'username';
+    }
+
+    public function updateLastLogin()
+    {
+        $this->update(['last_login' => now()]);
+    }
+}
+```
+
+**Penjelasan Model Admin:**
+- **Extends Authenticatable**: Inherit dari Laravel authentication system
+- **Username Authentication**: Override `getAuthIdentifierName()` untuk menggunakan username instead of email
+- **Fillable Fields**: username, password, dan last_login untuk tracking
+- **Hidden Fields**: Password disembunyikan dari JSON response untuk keamanan
+- **Casts**: 
+  - `last_login` dicast ke datetime untuk format yang konsisten
+  - `password` automatic hashing dengan Laravel
+- **Helper Method**: `updateLastLogin()` untuk tracking kapan admin terakhir login
 
 ---
 
@@ -200,12 +448,39 @@ Model untuk authentication admin panel dengan:
 ### 5.1 PortofolioController
 **[SCREENSHOT BAGIAN: File app/Http/Controllers/PortofolioController.php terbuka di editor]**
 
-Controller sederhana untuk menampilkan halaman utama portofolio. Hanya memiliki method index() yang mengembalikan view portofolio.blade.php.
+```php
+<?php
+// app/Http/Controllers/PortofolioController.php
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class PortofolioController extends Controller
+{
+    public function index()
+    {
+        return view('portofolio');
+    }
+}
+```
+
+**Penjelasan PortofolioController:**
+- **Simple Controller**: Controller sederhana yang hanya menangani homepage
+- **Method index()**: Satu-satunya method yang mengembalikan view `portofolio.blade.php`
+- **No Logic**: Tidak ada business logic karena homepage hanya menampilkan konten statis
+- **View Rendering**: Menggunakan Laravel's view helper untuk merender Blade template
 
 ### 5.2 ProjectController
 **[SCREENSHOT BAGIAN: File app/Http/Controllers/ProjectController.php, fokus pada method index dengan query chains]**
 
 ```php
+<?php
+// app/Http/Controllers/ProjectController.php
+namespace App\Http\Controllers;
+
+use App\Models\Project;
+use Illuminate\Http\Request;
+
 class ProjectController extends Controller
 {
     public function index()
@@ -230,29 +505,159 @@ class ProjectController extends Controller
 }
 ```
 
-Controller untuk halaman daftar proyek lengkap dengan method index() yang:
-- Mengambil data proyek berdasarkan tipe (project, experience, organization)
-- Menerapkan filter untuk item aktif saja
-- Mengurutkan berdasarkan sort_order dan created_at
-- Mengembalikan view dengan data yang sudah dikelompokkan
+**Penjelasan ProjectController:**
+- **Model Import**: Import `Project` model untuk database operations
+- **Method Chaining**: Menggunakan Eloquent query builder dengan method chaining untuk filtering
+- **Query Logic**:
+  - `Project::active()`: Filter hanya item dengan status aktif (is_active = true)
+  - `->byType('project')`: Filter berdasarkan tipe untuk mengelompokkan data
+  - `->ordered()`: Sorting berdasarkan sort_order dan created_at desc
+- **Data Grouping**: Memisahkan data ke 3 kategori (projects, experiences, organizations)
+- **View Compact**: Mengirim semua data ke view menggunakan `compact()` helper
+- **Organized Display**: View akan menampilkan data yang sudah terorganisir per kategori
 
 ### 5.3 AdminController
 **[SCREENSHOT BAGIAN: File app/Http/Controllers/AdminController.php, tunjukkan method login dengan Hash::check dan Session handling]**
 
-Controller untuk sistem admin dengan multiple methods:
-- **loginForm()**: Menampilkan form login
-- **login()**: Memproses authentication dengan validasi dan session management
-- **dashboard()**: Menampilkan statistik dan overview data
-- **logout()**: Menghapus session dan redirect ke login
+```php
+<?php
+// app/Http/Controllers/AdminController.php
+namespace App\Http\Controllers;
+
+use App\Models\Admin;
+use App\Models\Project;
+use App\Models\Contact;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+class AdminController extends Controller
+{
+    public function loginForm()
+    {
+        return view('admin.login');
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $admin = Admin::where('username', $request->username)->first();
+
+        if ($admin && Hash::check($request->password, $admin->password)) {
+            session(['admin_logged_in' => true, 'admin_id' => $admin->id]);
+            $admin->updateLastLogin();
+            
+            return redirect()->route('admin.dashboard');
+        }
+
+        return back()->withErrors(['login' => 'Invalid credentials']);
+    }
+
+    public function dashboard()
+    {
+        $stats = [
+            'total_projects' => Project::count(),
+            'active_projects' => Project::active()->count(),
+            'total_messages' => Contact::count(),
+            'unread_messages' => Contact::unread()->count(),
+        ];
+
+        $recent_messages = Contact::latest()->take(5)->get();
+
+        return view('admin.dashboard', compact('stats', 'recent_messages'));
+    }
+
+    public function logout()
+    {
+        session()->forget(['admin_logged_in', 'admin_id']);
+        return redirect()->route('admin.login');
+    }
+}
+```
+
+**Penjelasan AdminController:**
+- **Model Imports**: Import Admin, Project, dan Contact models untuk data operations
+- **loginForm()**: Menampilkan halaman login admin
+- **login()**: 
+  - Validasi input username dan password
+  - Cari admin berdasarkan username
+  - Verifikasi password menggunakan `Hash::check()`
+  - Simpan session untuk maintain login state
+  - Update last login timestamp
+  - Redirect ke dashboard atau kembali dengan error
+- **dashboard()**: 
+  - Hitung statistik (total projects, active projects, messages)
+  - Ambil 5 pesan terbaru untuk preview
+  - Kirim data ke dashboard view
+- **logout()**: Hapus session dan redirect ke login page
 
 ### 5.4 ContactController
 **[SCREENSHOT BAGIAN: File app/Http/Controllers/ContactController.php di editor, tunjukkan method store dengan validasi]**
 
-Controller untuk form kontak dengan method store() yang:
-- Validasi input form (name, email, subject, message)
-- Menyimpan pesan ke database dengan status 'unread'
-- Support AJAX dan regular form submission
-- Error handling dengan try-catch block
+```php
+<?php
+// app/Http/Controllers/ContactController.php
+namespace App\Http\Controllers;
+
+use App\Models\Contact;
+use Illuminate\Http\Request;
+
+class ContactController extends Controller
+{
+    public function store(Request $request)
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'subject' => 'required|string|max:255',
+                'message' => 'required|string|max:5000',
+            ]);
+
+            Contact::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'subject' => $request->subject,
+                'message' => $request->message,
+                'status' => 'unread',
+            ]);
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Pesan berhasil dikirim!'
+                ]);
+            }
+
+            return back()->with('success', 'Pesan berhasil dikirim!');
+
+        } catch (\Exception $e) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terjadi kesalahan, silakan coba lagi.'
+                ], 500);
+            }
+
+            return back()->with('error', 'Terjadi kesalahan, silakan coba lagi.');
+        }
+    }
+}
+```
+
+**Penjelasan ContactController:**
+- **Validation Rules**: Validasi semua input form dengan rules yang ketat
+  - `name`: Required string maksimal 255 karakter
+  - `email`: Required dengan format email valid
+  - `subject`: Required string untuk subjek pesan
+  - `message`: Required string maksimal 5000 karakter
+- **Database Insert**: Simpan data ke Contact model dengan status 'unread'
+- **AJAX Support**: Deteksi AJAX request dan return JSON response
+- **Error Handling**: Try-catch block untuk handle exceptions
+- **Response Types**: Support both JSON (AJAX) dan redirect (regular form) responses
 
 ### 5.5 AdminProjectController
 Controller lengkap untuk CRUD operations proyek dengan methods:
@@ -287,24 +692,71 @@ Controller untuk mengelola pesan kontak dengan features:
 **[SCREENSHOT BAGIAN: File routes/web.php terbuka di editor, tunjukkan struktur routing dengan group dan prefix]**
 
 ```php
+<?php
+// routes/web.php
+use App\Http\Controllers\PortofolioController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminProjectController;
+use App\Http\Controllers\AdminMessageController;
+
 // Public Routes
 Route::get('/', [PortofolioController::class, 'index'])->name('portofolio.home');
+Route::get('/home', [PortofolioController::class, 'index'])->name('portofolio.home.alt');
 Route::get('/project', [ProjectController::class, 'index'])->name('project.index');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
-// Admin Routes Group
+// Admin Routes Group with Authentication Middleware
 Route::prefix('admin')->group(function () {
+    // Authentication Routes (No Middleware)
     Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.login');
     Route::post('/login', [AdminController::class, 'login'])->name('admin.login.post');
-    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     
-    Route::prefix('projects')->group(function () {
-        Route::get('/', [AdminProjectController::class, 'index'])->name('admin.projects.index');
-        Route::get('/create', [AdminProjectController::class, 'create'])->name('admin.projects.create');
-        Route::post('/', [AdminProjectController::class, 'store'])->name('admin.projects.store');
+    // Protected Admin Routes
+    Route::middleware('admin.auth')->group(function () {
+        Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+        
+        // Project Management Routes
+        Route::prefix('projects')->group(function () {
+            Route::get('/', [AdminProjectController::class, 'index'])->name('admin.projects.index');
+            Route::get('/create', [AdminProjectController::class, 'create'])->name('admin.projects.create');
+            Route::post('/', [AdminProjectController::class, 'store'])->name('admin.projects.store');
+            Route::get('/{id}/edit', [AdminProjectController::class, 'edit'])->name('admin.projects.edit');
+            Route::put('/{id}', [AdminProjectController::class, 'update'])->name('admin.projects.update');
+            Route::delete('/{id}', [AdminProjectController::class, 'destroy'])->name('admin.projects.destroy');
+            
+            // Trash Management
+            Route::get('/trash', [AdminProjectController::class, 'trash'])->name('admin.projects.trash');
+            Route::patch('/{id}/restore', [AdminProjectController::class, 'restore'])->name('admin.projects.restore');
+            Route::delete('/{id}/force', [AdminProjectController::class, 'forceDelete'])->name('admin.projects.force-delete');
+        });
+        
+        // Message Management Routes
+        Route::prefix('messages')->group(function () {
+            Route::get('/', [AdminMessageController::class, 'index'])->name('admin.messages.index');
+            Route::get('/{id}', [AdminMessageController::class, 'show'])->name('admin.messages.show');
+            Route::delete('/{id}', [AdminMessageController::class, 'destroy'])->name('admin.messages.destroy');
+            Route::patch('/{id}/read', [AdminMessageController::class, 'markAsRead'])->name('admin.messages.read');
+            Route::patch('/{id}/unread', [AdminMessageController::class, 'markAsUnread'])->name('admin.messages.unread');
+        });
     });
 });
 ```
+
+**Penjelasan Routing System:**
+- **Public Routes**: Routes yang dapat diakses tanpa authentication
+  - Homepage dengan 2 URL alias (`/` dan `/home`)
+  - Project listing page (`/project`)
+  - Contact form submission (`POST /contact`)
+- **Admin Route Group**: Semua admin routes menggunakan prefix `/admin`
+- **Authentication Routes**: Login routes tanpa middleware protection
+- **Protected Routes**: Routes dengan `admin.auth` middleware untuk security
+- **RESTful Structure**: Mengikuti convention RESTful untuk CRUD operations
+- **Nested Grouping**: Projects dan messages menggunakan prefix grouping untuk organization
+- **Trash System**: Special routes untuk soft delete management
+- **HTTP Methods**: Proper HTTP verbs (GET, POST, PUT, PATCH, DELETE) sesuai operasi
 
 Menggunakan prefix `admin` dengan routes:
 - **Authentication**: Login/logout admin
