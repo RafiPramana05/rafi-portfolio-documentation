@@ -25,6 +25,8 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-xetex texlive-luatex
+        # Install additional packages for better code handling
+        sudo apt-get install -y texlive-latex-recommended
         # Install additional fonts for better rendering
         sudo apt-get install -y fonts-liberation fonts-dejavu-core fonts-dejavu-extra
         
@@ -205,6 +207,68 @@ jobs:
         }
         EOF
         
+    - name: Create LaTeX Header for Code Blocks
+      run: |
+        cat > latex-header.tex << 'EOF'
+        % LaTeX packages for better code handling
+        \usepackage{fancyvrb}
+        \usepackage{xcolor}
+        \usepackage{listings}
+        \usepackage{fvextra}
+        
+        % Configure fancyvrb for better code blocks
+        \fvset{
+          breaklines=true,
+          breakanywhere=true,
+          fontsize=\small,
+          frame=single,
+          framesep=3mm,
+          rulecolor=\color{gray},
+          backgroundcolor=\color{black!90},
+          formatcom=\color{white}
+        }
+        
+        % Configure listings for syntax highlighting
+        \lstset{
+          basicstyle=\ttfamily\small\color{white},
+          backgroundcolor=\color{black!90},
+          frame=single,
+          framesep=3mm,
+          rulecolor=\color{gray},
+          breaklines=true,
+          breakatwhitespace=true,
+          breakindent=20pt,
+          prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+          postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookrightarrow\space}},
+          showstringspaces=false,
+          keywordstyle=\color{purple}\bfseries,
+          commentstyle=\color{green!60}\itshape,
+          stringstyle=\color{orange!80},
+          numberstyle=\color{gray},
+          identifierstyle=\color{cyan!80},
+        }
+        
+        % Override Pandoc's default Shaded environment for code blocks
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+          breaklines=true,
+          breakanywhere=true,
+          fontsize=\small,
+          frame=single,
+          framesep=3mm,
+          rulecolor=\color{gray},
+          backgroundcolor=\color{black!90},
+          formatcom=\color{white}
+        }
+        
+        % Define color scheme for syntax highlighting
+        \definecolor{keywordcolor}{RGB}{197, 134, 192}
+        \definecolor{stringcolor}{RGB}{206, 145, 120}
+        \definecolor{commentcolor}{RGB}{106, 153, 85}
+        \definecolor{numbercolor}{RGB}{181, 206, 168}
+        \definecolor{functioncolor}{RGB}{220, 220, 170}
+        \definecolor{attributecolor}{RGB}{146, 197, 247}
+        EOF
+        
     - name: Prepare Markdown for PDF (Replace Emoji)
       run: |
         # Create a copy of markdown with emoji replaced for better PDF compatibility
@@ -219,7 +283,7 @@ jobs:
           --to pdf \
           --pdf-engine=xelatex \
           --highlight-style=breezedark \
-          --css=custom-style.css \
+          --include-in-header=latex-header.tex \
           --toc \
           --toc-depth=3 \
           --number-sections \
@@ -230,8 +294,6 @@ jobs:
           -V linestretch=1.2 \
           -V papersize=a4 \
           -V documentclass=article \
-          --wrap=auto \
-          --columns=80 \
           --metadata title="Dokumentasi Website Portfolio Rafi Pramana Putra" \
           --metadata author="Rafi Pramana Putra" \
           --metadata date="$(date +'%B %Y')" || \
@@ -242,7 +304,7 @@ jobs:
           --to pdf \
           --pdf-engine=pdflatex \
           --highlight-style=breezedark \
-          --css=custom-style.css \
+          --include-in-header=latex-header.tex \
           --toc \
           --toc-depth=3 \
           --number-sections \
@@ -251,8 +313,6 @@ jobs:
           -V linestretch=1.2 \
           -V papersize=a4 \
           -V documentclass=article \
-          --wrap=auto \
-          --columns=80 \
           --metadata title="Dokumentasi Website Portfolio Rafi Pramana Putra" \
           --metadata author="Rafi Pramana Putra" \
           --metadata date="$(date +'%B %Y')"
