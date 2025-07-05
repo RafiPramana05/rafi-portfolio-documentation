@@ -25,8 +25,8 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-xetex texlive-luatex
-        # Install additional fonts for better rendering including emoji support
-        sudo apt-get install -y fonts-liberation fonts-dejavu fonts-noto-color-emoji fonts-noto-emoji
+        # Install additional fonts for better rendering
+        sudo apt-get install -y fonts-liberation fonts-dejavu-core fonts-dejavu-extra
         
     - name: Create Custom CSS for Syntax Highlighting
       run: |
@@ -184,10 +184,15 @@ jobs:
         }
         EOF
         
+    - name: Prepare Markdown for PDF (Replace Emoji)
+      run: |
+        # Create a copy of markdown with emoji replaced for better PDF compatibility
+        sed 's/✅/[CHECKMARK]/g; s/🚀/[ROCKET]/g; s/📄/[DOCUMENT]/g; s/⚡/[LIGHTNING]/g; s/🎯/[TARGET]/g; s/📊/[CHART]/g; s/🔄/[REFRESH]/g; s/✨/[SPARKLES]/g; s/📅/[CALENDAR]/g; s/🎉/[PARTY]/g; s/💡/[BULB]/g; s/🔧/[WRENCH]/g; s/📁/[FOLDER]/g; s/🏷️/[TAG]/g; s/📥/[INBOX]/g; s/📝/[MEMO]/g; s/🎛️/[CONTROL]/g' "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" > "DOKUMENTASI_CLEAN.md"
+        
     - name: Convert MD to PDF with Styling
       run: |
         # Try XeLaTeX first, fallback to pdflatex if failed
-        pandoc "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" \
+        pandoc "DOKUMENTASI_CLEAN.md" \
           -o "Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf" \
           --from markdown \
           --to pdf \
@@ -208,7 +213,7 @@ jobs:
           --metadata author="Rafi Pramana Putra" \
           --metadata date="$(date +'%B %Y')" || \
         # Fallback to pdflatex if xelatex fails
-        pandoc "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" \
+        pandoc "DOKUMENTASI_CLEAN.md" \
           -o "Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf" \
           --from markdown \
           --to pdf \
