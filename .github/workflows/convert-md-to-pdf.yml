@@ -3,9 +3,6 @@ name: Convert Markdown to PDF
 on:
   push:
     branches: [ main, master ]
-    paths: 
-      - '*.md'
-      - 'DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md'
   workflow_dispatch: # Manual trigger
 
 jobs:
