@@ -41,6 +41,7 @@ jobs:
             texlive-fonts-recommended \
             texlive-xetex \
             texlive-latex-extra \
+            texlive-latex-recommended \
             lmodern \
             cm-super
           sudo apt-get install -y --no-install-recommends fonts-dejavu-core
@@ -50,34 +51,26 @@ jobs:
       run: |
         echo "/* Minimal CSS - LaTeX handles most styling */" > simple-style.css
         
-    - name: Create LaTeX Header for Code Blocks
+    - name: Create Simple LaTeX Header
       run: |
         cat > latex-header.tex << 'EOF'
-        % Essential packages for code handling
+        % Simple LaTeX header for basic formatting
         \usepackage{xcolor}
-        \usepackage{fancyvrb}
+        \usepackage{listings}
         
-        % Define colors for syntax highlighting
-        \definecolor{codebackground}{RGB}{30, 30, 30}
-        \definecolor{codetext}{RGB}{212, 212, 212}
-        \definecolor{keywordcolor}{RGB}{197, 134, 192}
-        \definecolor{stringcolor}{RGB}{206, 145, 120}
-        \definecolor{commentcolor}{RGB}{106, 153, 85}
-        
-        % Configure fancyvrb for code blocks with line breaking
-        \fvset{
+        % Configure listings for code blocks with wrapping
+        \lstset{
+          basicstyle=\ttfamily\small,
           breaklines=true,
-          breakanywhere=true,
-          fontsize=\small,
-          commandchars=\\\{\}
-        }
-        
-        % Override Pandoc's Highlighting environment
-        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
-          breaklines=true,
-          breakanywhere=true,
-          fontsize=\small,
-          commandchars=\\\{\}
+          breakatwhitespace=true,
+          postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+          showstringspaces=false,
+          frame=single,
+          backgroundcolor=\color{black!90},
+          keywordstyle=\color{purple}\bfseries,
+          commentstyle=\color{green!60}\itshape,
+          stringstyle=\color{orange!80},
+          basicstyle=\color{white}\ttfamily\small
         }
         EOF
         
