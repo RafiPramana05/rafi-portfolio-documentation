@@ -18,10 +18,12 @@ jobs:
       with:
         pandoc-version: '3.1.8'
         
-    - name: Install LaTeX
+    - name: Install LaTeX with XeLaTeX
       run: |
         sudo apt-get update
-        sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+        sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-xetex texlive-luatex
+        # Install additional fonts for better rendering
+        sudo apt-get install -y fonts-liberation fonts-dejavu
         
     - name: Create Custom CSS for Syntax Highlighting
       run: |
@@ -181,6 +183,7 @@ jobs:
         
     - name: Convert MD to PDF with Styling
       run: |
+        # Try XeLaTeX first, fallback to pdflatex if failed
         pandoc "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" \
           -o "Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf" \
           --from markdown \
@@ -192,8 +195,27 @@ jobs:
           --toc-depth=3 \
           --number-sections \
           -V geometry:margin=2.5cm \
-          -V mainfont="Arial" \
-          -V monofont="Consolas" \
+          -V mainfont="DejaVu Sans" \
+          -V monofont="DejaVu Sans Mono" \
+          -V fontsize=11pt \
+          -V linestretch=1.2 \
+          -V papersize=a4 \
+          -V documentclass=article \
+          --metadata title="Dokumentasi Website Portfolio Rafi Pramana Putra" \
+          --metadata author="Rafi Pramana Putra" \
+          --metadata date="$(date +'%B %Y')" || \
+        # Fallback to pdflatex if xelatex fails
+        pandoc "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" \
+          -o "Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf" \
+          --from markdown \
+          --to pdf \
+          --pdf-engine=pdflatex \
+          --highlight-style=breezedark \
+          --css=custom-style.css \
+          --toc \
+          --toc-depth=3 \
+          --number-sections \
+          -V geometry:margin=2.5cm \
           -V fontsize=11pt \
           -V linestretch=1.2 \
           -V papersize=a4 \
