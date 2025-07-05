@@ -51,33 +51,98 @@ jobs:
       run: |
         echo "/* Minimal CSS - LaTeX handles most styling */" > simple-style.css
         
-    - name: Create Simple LaTeX Header
+    - name: Create Optimized LaTeX Header
       run: |
         cat > latex-header.tex << 'EOF'
-        % Simple LaTeX header for basic formatting
+        % Optimized LaTeX header for code blocks
         \usepackage{xcolor}
-        \usepackage{listings}
+        \usepackage{fancyvrb}
         
-        % Configure listings for code blocks with wrapping
-        \lstset{
-          basicstyle=\ttfamily\small,
-          breaklines=true,
-          breakatwhitespace=true,
-          postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
-          showstringspaces=false,
-          frame=single,
-          backgroundcolor=\color{black!90},
-          keywordstyle=\color{purple}\bfseries,
-          commentstyle=\color{green!60}\itshape,
-          stringstyle=\color{orange!80},
-          basicstyle=\color{white}\ttfamily\small
+        % Define colors
+        \definecolor{codebg}{RGB}{30, 30, 30}
+        \definecolor{codetext}{RGB}{212, 212, 212}
+        \definecolor{keywordcolor}{RGB}{197, 134, 192}
+        \definecolor{stringcolor}{RGB}{206, 145, 120}
+        \definecolor{commentcolor}{RGB}{106, 153, 85}
+        
+        % Simple verbatim environment for code blocks
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+          fontsize=\small,
+          commandchars=\\\{\}
+        }
+        
+        % Redefine Shaded environment for dark backgrounds
+        \usepackage{framed}
+        \definecolor{shadecolor}{RGB}{30, 30, 30}
+        \renewenvironment{Shaded}{
+          \color{white}
+          \begin{snugshade}
+        }{
+          \end{snugshade}
         }
         EOF
         
-    - name: Prepare Markdown for PDF (Replace Emoji)
+    - name: Prepare Markdown for PDF (Replace Emoji and Fix Code)
       run: |
-        # Create a copy of markdown with emoji replaced for better PDF compatibility
-        sed 's/✅/[CHECKMARK]/g; s/🚀/[ROCKET]/g; s/📄/[DOCUMENT]/g; s/⚡/[LIGHTNING]/g; s/🎯/[TARGET]/g; s/📊/[CHART]/g; s/🔄/[REFRESH]/g; s/✨/[SPARKLES]/g; s/📅/[CALENDAR]/g; s/🎉/[PARTY]/g; s/💡/[BULB]/g; s/🔧/[WRENCH]/g; s/📁/[FOLDER]/g; s/🏷️/[TAG]/g; s/📥/[INBOX]/g; s/📝/[MEMO]/g; s/🎛️/[CONTROL]/g' "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" > "DOKUMENTASI_CLEAN.md"
+        # Replace emoji first
+        sed 's/✅/[CHECKMARK]/g; s/🚀/[ROCKET]/g; s/📄/[DOCUMENT]/g; s/⚡/[LIGHTNING]/g; s/🎯/[TARGET]/g; s/📊/[CHART]/g; s/🔄/[REFRESH]/g; s/✨/[SPARKLES]/g; s/📅/[CALENDAR]/g; s/🎉/[PARTY]/g; s/💡/[BULB]/g; s/🔧/[WRENCH]/g; s/📁/[FOLDER]/g; s/🏷️/[TAG]/g; s/📥/[INBOX]/g; s/📝/[MEMO]/g; s/🎛️/[CONTROL]/g' "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" > "TEMP_EMOJI_FIXED.md"
+        
+        # Process code blocks to break long lines
+        python3 << 'EOF'
+        import re
+        import textwrap
+        
+        def wrap_code_blocks(content):
+            # Pattern to match code blocks
+            pattern = r'```(\w*)\n(.*?)\n```'
+            
+            def wrap_code_content(match):
+                language = match.group(1)
+                code_content = match.group(2)
+                
+                # Split into lines and wrap each line that's too long
+                lines = code_content.split('\n')
+                wrapped_lines = []
+                
+                for line in lines:
+                    if len(line) > 80:  # If line is longer than 80 characters
+                        # Wrap the line, preserving indentation
+                        indent = len(line) - len(line.lstrip())
+                        indent_str = ' ' * indent
+                        
+                        # Remove indentation, wrap, then re-add indentation
+                        clean_line = line.strip()
+                        wrapped = textwrap.fill(clean_line, 
+                                              width=80-indent, 
+                                              subsequent_indent='  ',
+                                              break_long_words=True,
+                                              break_on_hyphens=False)
+                        
+                        # Add original indentation back
+                        wrapped_with_indent = '\n'.join(indent_str + wrapped_line.lstrip() 
+                                                       for wrapped_line in wrapped.split('\n'))
+                        wrapped_lines.append(wrapped_with_indent)
+                    else:
+                        wrapped_lines.append(line)
+                
+                return f'```{language}\n' + '\n'.join(wrapped_lines) + '\n```'
+            
+            # Apply the wrapping to all code blocks
+            return re.sub(pattern, wrap_code_content, content, flags=re.DOTALL)
+        
+        # Read the file
+        with open('TEMP_EMOJI_FIXED.md', 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Process code blocks
+        processed_content = wrap_code_blocks(content)
+        
+        # Write the result
+        with open('DOKUMENTASI_CLEAN.md', 'w', encoding='utf-8') as f:
+            f.write(processed_content)
+        
+        print("Code blocks processed for better PDF wrapping")
+        EOF
         
     - name: Convert MD to PDF with Styling
       run: |
