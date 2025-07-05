@@ -1,19 +1,5 @@
 # DOKUMENTASI WEBSITE PORTOFOLIO RAFI PRAMANA PUTRA
 
-## DAFTAR ISI
-1. [Latar Belakang dan Overview](#latar-belakang-dan-overview)
-2. [Struktur Folder dan Arsitektur](#struktur-folder-dan-arsitektur)
-3. [Konfigurasi Dependencies](#konfigurasi-dependencies)
-4. [Database Models](#database-models)
-5. [Controllers dan Logic](#controllers-dan-logic)
-6. [Routing System](#routing-system)
-7. [Blade Templates dan Views](#blade-templates-dan-views)
-8. [Styling dan Animations](#styling-dan-animations)
-9. [JavaScript Functionality](#javascript-functionality)
-10. [Fitur Admin Panel](#fitur-admin-panel)
-
----
-
 ## LATAR BELAKANG DAN OVERVIEW
 
 ### 1.1 Informasi Proyek
