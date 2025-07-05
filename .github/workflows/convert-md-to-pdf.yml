@@ -5,6 +5,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch: # Manual trigger
 
+permissions:
+  contents: write
+
 jobs:
   convert-to-pdf:
     runs-on: ubuntu-latest
@@ -22,8 +25,8 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-xetex texlive-luatex
-        # Install additional fonts for better rendering
-        sudo apt-get install -y fonts-liberation fonts-dejavu
+        # Install additional fonts for better rendering including emoji support
+        sudo apt-get install -y fonts-liberation fonts-dejavu fonts-noto-color-emoji fonts-noto-emoji
         
     - name: Create Custom CSS for Syntax Highlighting
       run: |
@@ -226,12 +229,12 @@ jobs:
           
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1
+      uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: pdf-v${{ github.run_number }}
-        release_name: "Documentation PDF v${{ github.run_number }}"
+        name: "Documentation PDF v${{ github.run_number }}"
         body: |
           📄 **Dokumentasi Portfolio Website - PDF Version**
           
@@ -248,18 +251,10 @@ jobs:
           📅 **Generated on:** $(date +'%Y-%m-%d %H:%M:%S UTC')
           🔄 **Commit:** ${{ github.sha }}
           
+        files: |
+          Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf
         draft: false
         prerelease: false
-        
-    - name: Upload PDF to Release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf
-        asset_name: Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf
-        asset_content_type: application/pdf
         
     - name: Upload PDF as Artifact
       uses: actions/upload-artifact@v4
