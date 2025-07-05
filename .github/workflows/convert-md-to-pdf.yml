@@ -16,205 +16,49 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
       
+    - name: Cache LaTeX packages
+      uses: actions/cache@v4
+      with:
+        path: |
+          /usr/share/texlive
+          /usr/local/texlive
+        key: latex-packages-${{ runner.os }}-v2
+        restore-keys: |
+          latex-packages-${{ runner.os }}-
+          
     - name: Setup Pandoc
       uses: r-lib/actions/setup-pandoc@v2
       with:
         pandoc-version: '3.1.8'
         
-    - name: Install LaTeX with XeLaTeX
+    - name: Install LaTeX with XeLaTeX (Optimized)
       run: |
-        sudo apt-get update
-        sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-xetex texlive-luatex
-        # Install additional packages for better code handling
-        sudo apt-get install -y texlive-latex-recommended
-        # Install additional fonts for better rendering
-        sudo apt-get install -y fonts-liberation fonts-dejavu-core fonts-dejavu-extra
+        # Only install if not cached
+        if ! command -v xelatex &> /dev/null; then
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-fonts-recommended texlive-xetex texlive-latex-extra
+          sudo apt-get install -y --no-install-recommends fonts-dejavu-core
+        fi
         
-    - name: Create Custom CSS for Syntax Highlighting
+    - name: Create Simplified CSS
       run: |
-        cat > custom-style.css << 'EOF'
-        /* Base styling */
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: white;
-            max-width: none;
-            margin: 0;
-            padding: 20px;
-        }
-
-        /* Headers */
-        h1, h2, h3, h4, h5, h6 {
-            color: #2c3e50;
-            font-weight: 700;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            page-break-after: avoid;
-        }
-
-        h1 { font-size: 2.5rem; border-bottom: 3px solid #3498db; padding-bottom: 0.5rem; }
-        h2 { font-size: 2rem; border-bottom: 2px solid #95a5a6; padding-bottom: 0.3rem; }
-        h3 { font-size: 1.5rem; color: #34495e; }
-
-        /* Code blocks dengan background hitam */
-        pre {
-            background-color: #1e1e1e !important;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            page-break-inside: avoid;
-            /* Fix untuk code yang panjang */
-            word-wrap: break-word;
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
-            max-width: 100%;
-        }
-
-        code {
-            background-color: #1e1e1e !important;
-            color: #d4d4d4;
-            padding: 0.3rem 0.5rem;
-            border-radius: 4px;
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            font-size: 0.8rem;
-            /* Fix untuk inline code yang panjang */
-            word-wrap: break-word;
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
-        }
-
-        /* Inline code */
-        p code, li code {
-            background-color: #f8f9fa !important;
-            color: #e83e8c;
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
-            font-size: 0.85rem;
-        }
-
-        /* Syntax highlighting colors */
-        .sourceCode .kw { color: #c586c0; font-weight: bold; }  /* Keywords (ungu) */
-        .sourceCode .dt { color: #4ec9b0; }  /* Data types */
-        .sourceCode .dv, .sourceCode .bn, .sourceCode .fl { color: #b5cea8; }  /* Numbers */
-        .sourceCode .ch, .sourceCode .st { color: #ce9178; }  /* Strings */
-        .sourceCode .co { color: #6a9955; font-style: italic; }  /* Comments */
-        .sourceCode .ot { color: #dcdcaa; }  /* Other */
-        .sourceCode .al { color: #f44747; font-weight: bold; }  /* Alert */
-        .sourceCode .fu { color: #dcdcaa; }  /* Functions */
-        .sourceCode .er { color: #f44747; }  /* Errors */
-        .sourceCode .at { color: #92c5f7; }  /* Attributes */
-        .sourceCode .cf { color: #c586c0; font-weight: bold; }  /* Control flow */
-        
-        /* Fix untuk sourceCode container */
-        .sourceCode {
-            word-wrap: break-word;
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
-            max-width: 100%;
-        }
-
-        /* HTML/CSS specific highlighting */
-        .sourceCode .dt { color: #f9c74f; }  /* HTML tags (oranye kekuningan) */
-        .sourceCode .an { color: #92c5f7; }  /* Attribute names */
-
-        /* Screenshot markers styling */
-        p strong:first-child {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 0.8rem 1.2rem;
-            border-radius: 8px;
-            display: block;
-            margin: 2rem 0 1rem 0;
-            font-size: 0.9rem;
-            font-weight: 600;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            page-break-after: avoid;
-        }
-
-        /* Tables */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin: 1.5rem 0;
-            border: 1px solid #ddd;
-            page-break-inside: avoid;
-            table-layout: fixed;
-            word-wrap: break-word;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-            font-size: 0.9rem;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            max-width: 0;
-        }
-
-        th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-            color: #495057;
-        }
-
-        /* Lists */
-        ul, ol {
-            margin: 1rem 0;
-            padding-left: 2rem;
-        }
-
-        li {
-            margin: 0.5rem 0;
-        }
-
-        /* Links */
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Blockquotes */
-        blockquote {
-            border-left: 4px solid #3498db;
-            padding-left: 1rem;
-            margin: 1.5rem 0;
-            color: #666;
-            font-style: italic;
-        }
-
-        /* Page breaks */
-        .page-break {
-            page-break-before: always;
-        }
-
-        /* Prevent widows and orphans */
-        p, li {
-            orphans: 3;
-            widows: 3;
-        }
-
-        /* Emoji support */
-        .emoji {
-            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
-        }
-        EOF
+        echo "/* Minimal CSS - LaTeX handles most styling */" > simple-style.css
         
     - name: Create LaTeX Header for Code Blocks
       run: |
         cat > latex-header.tex << 'EOF'
-        % LaTeX packages for better code handling
-        \usepackage{fancyvrb}
+        % LaTeX packages for better code handling - ORDER MATTERS!
         \usepackage{xcolor}
+        \usepackage{fancyvrb}
         \usepackage{listings}
         \usepackage{fvextra}
+        
+        % Define colors first
+        \definecolor{codebackground}{RGB}{30, 30, 30}
+        \definecolor{codetext}{RGB}{212, 212, 212}
+        \definecolor{keywordcolor}{RGB}{197, 134, 192}
+        \definecolor{stringcolor}{RGB}{206, 145, 120}
+        \definecolor{commentcolor}{RGB}{106, 153, 85}
         
         % Configure fancyvrb for better code blocks
         \fvset{
@@ -223,29 +67,22 @@ jobs:
           fontsize=\small,
           frame=single,
           framesep=3mm,
-          rulecolor=\color{gray},
-          backgroundcolor=\color{black!90},
-          formatcom=\color{white}
+          rulecolor=\color{gray}
         }
         
         % Configure listings for syntax highlighting
         \lstset{
-          basicstyle=\ttfamily\small\color{white},
-          backgroundcolor=\color{black!90},
+          basicstyle=\ttfamily\small\color{codetext},
+          backgroundcolor=\color{codebackground},
           frame=single,
           framesep=3mm,
           rulecolor=\color{gray},
           breaklines=true,
           breakatwhitespace=true,
-          breakindent=20pt,
-          prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
-          postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookrightarrow\space}},
           showstringspaces=false,
-          keywordstyle=\color{purple}\bfseries,
-          commentstyle=\color{green!60}\itshape,
-          stringstyle=\color{orange!80},
-          numberstyle=\color{gray},
-          identifierstyle=\color{cyan!80},
+          keywordstyle=\color{keywordcolor}\bfseries,
+          commentstyle=\color{commentcolor}\itshape,
+          stringstyle=\color{stringcolor}
         }
         
         % Override Pandoc's default Shaded environment for code blocks
@@ -255,18 +92,8 @@ jobs:
           fontsize=\small,
           frame=single,
           framesep=3mm,
-          rulecolor=\color{gray},
-          backgroundcolor=\color{black!90},
-          formatcom=\color{white}
+          rulecolor=\color{gray}
         }
-        
-        % Define color scheme for syntax highlighting
-        \definecolor{keywordcolor}{RGB}{197, 134, 192}
-        \definecolor{stringcolor}{RGB}{206, 145, 120}
-        \definecolor{commentcolor}{RGB}{106, 153, 85}
-        \definecolor{numbercolor}{RGB}{181, 206, 168}
-        \definecolor{functioncolor}{RGB}{220, 220, 170}
-        \definecolor{attributecolor}{RGB}{146, 197, 247}
         EOF
         
     - name: Prepare Markdown for PDF (Replace Emoji)
