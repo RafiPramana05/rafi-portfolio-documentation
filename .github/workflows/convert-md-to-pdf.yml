@@ -61,10 +61,14 @@ jobs:
             border: 1px solid #444;
             border-radius: 8px;
             padding: 1.5rem;
-            overflow-x: auto;
             margin: 1.5rem 0;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             page-break-inside: avoid;
+            /* Fix untuk code yang panjang */
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            max-width: 100%;
         }
 
         code {
@@ -73,7 +77,11 @@ jobs:
             padding: 0.3rem 0.5rem;
             border-radius: 4px;
             font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            /* Fix untuk inline code yang panjang */
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
         }
 
         /* Inline code */
@@ -97,6 +105,14 @@ jobs:
         .sourceCode .er { color: #f44747; }  /* Errors */
         .sourceCode .at { color: #92c5f7; }  /* Attributes */
         .sourceCode .cf { color: #c586c0; font-weight: bold; }  /* Control flow */
+        
+        /* Fix untuk sourceCode container */
+        .sourceCode {
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            max-width: 100%;
+        }
 
         /* HTML/CSS specific highlighting */
         .sourceCode .dt { color: #f9c74f; }  /* HTML tags (oranye kekuningan) */
@@ -123,6 +139,8 @@ jobs:
             margin: 1.5rem 0;
             border: 1px solid #ddd;
             page-break-inside: avoid;
+            table-layout: fixed;
+            word-wrap: break-word;
         }
 
         th, td {
@@ -130,6 +148,9 @@ jobs:
             padding: 12px;
             text-align: left;
             font-size: 0.9rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 0;
         }
 
         th {
@@ -209,6 +230,8 @@ jobs:
           -V linestretch=1.2 \
           -V papersize=a4 \
           -V documentclass=article \
+          --wrap=auto \
+          --columns=80 \
           --metadata title="Dokumentasi Website Portfolio Rafi Pramana Putra" \
           --metadata author="Rafi Pramana Putra" \
           --metadata date="$(date +'%B %Y')" || \
@@ -228,6 +251,8 @@ jobs:
           -V linestretch=1.2 \
           -V papersize=a4 \
           -V documentclass=article \
+          --wrap=auto \
+          --columns=80 \
           --metadata title="Dokumentasi Website Portfolio Rafi Pramana Putra" \
           --metadata author="Rafi Pramana Putra" \
           --metadata date="$(date +'%B %Y')"
