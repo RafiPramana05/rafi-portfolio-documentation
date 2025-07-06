@@ -52,7 +52,7 @@ Website ini dikembangkan sebagai platform portofolio digital untuk **Rafi Praman
 - **CV Download**: Akses download CV dalam format PDF
 - **Social Integration**: Integrasi dengan LinkedIn, WhatsApp, dan Email
 
-
+**[SCREENSHOT BAGIAN: Halaman utama website - tampilan hero section dengan background, nama "Rafi Pramana Putra", subtitle "Law Student & Community Leader", dan dua tombol]**
 
 &nbsp;
 
@@ -116,7 +116,7 @@ Website ini menggunakan struktur standar Laravel dengan organisasi sebagai berik
 - **routes/**: Definisi routing untuk web dan API endpoints
 - **config/**: File konfigurasi aplikasi Laravel
 
-
+**[SCREENSHOT BAGIAN: File explorer/IDE menunjukkan struktur folder lengkap dengan app/, resources/, database/, dll]**
 
 &nbsp;
 
