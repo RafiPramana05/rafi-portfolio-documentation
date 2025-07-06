@@ -11,55 +11,36 @@ permissions:
 jobs:
   convert-to-pdf:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 3
     
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
       
-    - name: Cache LaTeX packages
-      uses: actions/cache@v4
-      with:
-        path: |
-          /var/cache/apt
-          /var/lib/apt
-          /usr/share/texlive
-        key: latex-packages-${{ runner.os }}-v4
-        restore-keys: |
-          latex-packages-${{ runner.os }}-
-          
-    - name: Setup Pandoc & LaTeX (Ultra-Fast)
+    - name: Setup Pandoc & LaTeX (Lightning Fast)
       run: |
-        # Single apt-get update and install in one step
+        # Use pre-existing packages and minimal install
+        export DEBIAN_FRONTEND=noninteractive
         sudo apt-get update -qq
         sudo apt-get install -y --no-install-recommends \
           pandoc \
           texlive-latex-base \
           texlive-fonts-recommended \
-          texlive-latex-extra \
           lmodern
         
-    - name: Prepare Files (Combined)
+    - name: Generate PDF (All-in-One)
       run: |
-        # Create LaTeX header and process markdown in one step
-        cat > latex-header.tex << 'EOF'
-        % Ultra-fast LaTeX header (minimal packages)
-        \usepackage{xcolor}
+        # Create minimal LaTeX header
+        echo '\usepackage{xcolor}
         \definecolor{codebg}{RGB}{30, 30, 30}
         \definecolor{codetext}{RGB}{212, 212, 212}
         \definecolor{keywordcolor}{RGB}{197, 134, 192}
         \definecolor{stringcolor}{RGB}{206, 145, 120}
-        \definecolor{commentcolor}{RGB}{106, 153, 85}
-        EOF
+        \definecolor{commentcolor}{RGB}{106, 153, 85}' > latex-header.tex
         
-        # Process markdown (emoji replacement)
-        sed 's/✅/[CHECKMARK]/g; s/🚀/[ROCKET]/g; s/📄/[DOCUMENT]/g; s/⚡/[LIGHTNING]/g; s/🎯/[TARGET]/g; s/📊/[CHART]/g; s/🔄/[REFRESH]/g; s/✨/[SPARKLES]/g; s/📅/[CALENDAR]/g; s/🎉/[PARTY]/g; s/💡/[BULB]/g; s/🔧/[WRENCH]/g; s/📁/[FOLDER]/g; s/🏷️/[TAG]/g; s/📥/[INBOX]/g; s/📝/[MEMO]/g; s/🎛️/[CONTROL]/g' "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" > "DOKUMENTASI_CLEAN.md"
-        
-    - name: Convert MD to PDF (Optimized)
-      run: |
-        # Pandoc with minimal options for speed
-        pandoc "DOKUMENTASI_CLEAN.md" \
-          -o "Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf" \
+        # Process and convert in one pipeline
+        sed 's/✅/[CHECKMARK]/g; s/🚀/[ROCKET]/g; s/📄/[DOCUMENT]/g; s/⚡/[LIGHTNING]/g; s/🎯/[TARGET]/g; s/📊/[CHART]/g; s/🔄/[REFRESH]/g; s/✨/[SPARKLES]/g; s/📅/[CALENDAR]/g; s/🎉/[PARTY]/g; s/💡/[BULB]/g; s/🔧/[WRENCH]/g; s/📁/[FOLDER]/g; s/🏷️/[TAG]/g; s/📥/[INBOX]/g; s/📝/[MEMO]/g; s/🎛️/[CONTROL]/g' "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" | \
+        pandoc -o "Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf" \
           --pdf-engine=pdflatex \
           --highlight-style=breezedark \
           --include-in-header=latex-header.tex \
@@ -74,38 +55,14 @@ jobs:
           --metadata author="Rafi Pramana Putra" \
           --metadata date="$(date +'%B %Y')"
           
-    - name: Create Release
-      id: create_release
+    - name: Release PDF
       uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: pdf-v${{ github.run_number }}
         name: "Documentation PDF v${{ github.run_number }}"
-        body: |
-          [DOCUMENT] **Dokumentasi Portfolio Website - PDF Version**
-          
-          [ROCKET] **Generated automatically from Markdown**
-          
-          [SPARKLES] **Features:**
-          - Professional styling dengan syntax highlighting
-          - Background hitam untuk code blocks  
-          - Warna ungu untuk keywords
-          - Warna oranye kekuningan untuk HTML tags
-          - Table of contents dengan numbering
-          - Responsive layout untuk print
-          
-          [CALENDAR] **Generated on:** $(date +'%Y-%m-%d %H:%M:%S UTC')
-          [REFRESH] **Commit:** ${{ github.sha }}
-          
-        files: |
-          Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf
+        body: "[DOCUMENT] Dokumentasi Portfolio Website - PDF Version [ROCKET] Generated automatically [CALENDAR] $(date +'%Y-%m-%d %H:%M:%S UTC')"
+        files: Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf
         draft: false
         prerelease: false
-        
-    - name: Upload PDF as Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: documentation-pdf
-        path: Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf
-        retention-days: 90
