@@ -172,7 +172,25 @@ laravel/
 
 ### 3.1 Backend Dependencies (Composer)
 
-**[SCREENSHOT BAGIAN: File composer.json terbuka di editor, tunjukkan dependencies di bagian require dan require-dev]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`n
+**[SCREENSHOT BAGIAN: File composer.json terbuka di editor, tunjukkan dependencies di bagian require dan require-dev]**
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 &nbsp;
 
 &nbsp;
@@ -222,7 +240,25 @@ laravel/
 
 ### 3.2 Frontend Dependencies (NPM)
 
-**[SCREENSHOT BAGIAN: File package.json terbuka di editor, fokus pada devDependencies]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`n
+**[SCREENSHOT BAGIAN: File package.json terbuka di editor, fokus pada devDependencies]**
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 &nbsp;
 
 &nbsp;
@@ -266,7 +302,25 @@ laravel/
 
 ### 3.3 Build Configuration dan Performance
 
-**[SCREENSHOT BAGIAN: File vite.config.js di editor menunjukkan konfigurasi Laravel plugin]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`n
+**[SCREENSHOT BAGIAN: File vite.config.js di editor menunjukkan konfigurasi Laravel plugin]**
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 &nbsp;
 
 &nbsp;
@@ -963,7 +1017,27 @@ Animation system creates engaging user experience while maintaining accessibilit
 
 ### 9.1 Frontend JavaScript dan User Interactions
 
-**[SCREENSHOT BAGIAN: File resources/js/app.js terbuka di editor dengan event handlers dan utility functions]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`n```javascript
+**[SCREENSHOT BAGIAN: File resources/js/app.js terbuka di editor dengan event handlers dan utility functions]**
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
+
+```javascript
 // resources/js/app.js
 import './bootstrap';
 
