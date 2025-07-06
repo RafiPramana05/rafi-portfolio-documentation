@@ -18,9 +18,9 @@ jobs:
       
     - name: Install & Generate PDF
       run: |
-        # Install packages with XeLaTeX for Unicode support + fonts
+        # Install packages with XeLaTeX for Unicode support + enhanced fonts
         sudo apt-get update -qq
-        sudo apt-get install -y pandoc texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-xetex fonts-dejavu
+        sudo apt-get install -y pandoc texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-xetex fonts-dejavu fonts-liberation
         
         # Process markdown: minimal emoji replacement (XeLaTeX handles Unicode)
         sed 's/✅/[CHECKMARK]/g; s/🚀/[ROCKET]/g; s/📄/[DOCUMENT]/g; s/⚡/[LIGHTNING]/g; s/🎯/[TARGET]/g; s/📊/[CHART]/g; s/🔄/[REFRESH]/g; s/✨/[SPARKLES]/g; s/📅/[CALENDAR]/g; s/🎉/[PARTY]/g; s/💡/[BULB]/g; s/🔧/[WRENCH]/g; s/📁/[FOLDER]/g; s/🏷️/[TAG]/g; s/📥/[INBOX]/g; s/📝/[MEMO]/g; s/🎛️/[CONTROL]/g' "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" | \
@@ -29,12 +29,19 @@ jobs:
           --highlight-style=breezedark \
           --toc \
           --number-sections \
-          -V geometry:margin=2.5cm \
+          -V geometry:margin=2cm \
           -V fontsize=11pt \
           -V mainfont="DejaVu Sans" \
           -V monofont="DejaVu Sans Mono" \
-          -V geometry:margin=2cm \
-          --metadata title="Dokumentasi Website Portfolio Rafi Pramana Putra"
+          -V colorlinks=true \
+          -V linkcolor=blue \
+          -V urlcolor=blue \
+          -V toccolor=black \
+          -V listings=true \
+          -V include-in-header=latex-header.tex \
+          --metadata title="Dokumentasi Website Portfolio Rafi Pramana Putra" \
+          --metadata author="Rafi Pramana Putra" \
+          --metadata date="$(date +%Y-%m-%d)"
           
     - uses: softprops/action-gh-release@v1
       env:
