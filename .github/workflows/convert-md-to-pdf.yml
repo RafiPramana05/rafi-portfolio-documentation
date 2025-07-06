@@ -22,11 +22,28 @@ jobs:
         sudo apt-get update -qq
         sudo apt-get install -y pandoc texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-xetex fonts-dejavu
         
+        # Create LaTeX header for better code wrapping
+        cat > latex-header.tex << 'EOF'
+        \usepackage{fancyvrb}
+        \usepackage{xcolor}
+        \definecolor{codebg}{RGB}{30, 30, 30}
+        \definecolor{codetext}{RGB}{212, 212, 212}
+        
+        % Configure code block wrapping
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+          fontsize=\footnotesize,
+          breaklines=true,
+          breakanywhere=true,
+          commandchars=\\\{\}
+        }
+        EOF
+        
         # Process markdown: minimal emoji replacement (XeLaTeX handles Unicode)
         sed 's/✅/[CHECKMARK]/g; s/🚀/[ROCKET]/g; s/📄/[DOCUMENT]/g; s/⚡/[LIGHTNING]/g; s/🎯/[TARGET]/g; s/📊/[CHART]/g; s/🔄/[REFRESH]/g; s/✨/[SPARKLES]/g; s/📅/[CALENDAR]/g; s/🎉/[PARTY]/g; s/💡/[BULB]/g; s/🔧/[WRENCH]/g; s/📁/[FOLDER]/g; s/🏷️/[TAG]/g; s/📥/[INBOX]/g; s/📝/[MEMO]/g; s/🎛️/[CONTROL]/g' "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" | \
         pandoc -o "Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf" \
           --pdf-engine=xelatex \
           --highlight-style=breezedark \
+          --include-in-header=latex-header.tex \
           --toc \
           --number-sections \
           -V geometry:margin=2.5cm \
