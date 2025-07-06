@@ -18,11 +18,11 @@ jobs:
       
     - name: Install & Generate PDF
       run: |
-        # Ultra-minimal install
+        # Install minimal required packages for xcolor and syntax highlighting
         sudo apt-get update -qq
-        sudo apt-get install -y pandoc texlive-latex-base
+        sudo apt-get install -y pandoc texlive-latex-base texlive-latex-recommended
         
-        # Simple conversion
+        # Simple conversion (no custom styling to avoid conflicts)
         sed 's/✅/[CHECKMARK]/g; s/🚀/[ROCKET]/g; s/📄/[DOCUMENT]/g; s/⚡/[LIGHTNING]/g; s/🎯/[TARGET]/g; s/📊/[CHART]/g; s/🔄/[REFRESH]/g; s/✨/[SPARKLES]/g; s/📅/[CALENDAR]/g; s/🎉/[PARTY]/g; s/💡/[BULB]/g; s/🔧/[WRENCH]/g; s/📁/[FOLDER]/g; s/🏷️/[TAG]/g; s/📥/[INBOX]/g; s/📝/[MEMO]/g; s/🎛️/[CONTROL]/g' "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" | \
         pandoc -o "Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf" \
           --pdf-engine=pdflatex \
