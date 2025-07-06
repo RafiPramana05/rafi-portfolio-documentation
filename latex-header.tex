@@ -46,47 +46,49 @@
 % Configure listings for code blocks with better wrapping
 \lstset{
     backgroundcolor=\color{codebg},
-    basicstyle=\ttfamily\small\color{codetext},
+    basicstyle=\ttfamily\scriptsize\color{codetext},
     keywordstyle=\color{codekeyword}\bfseries,
     commentstyle=\color{codecomment}\itshape,
     stringstyle=\color{codestring},
     numberstyle=\tiny\color{codenumber},
     identifierstyle=\color{codetext},
     breaklines=true,
-    breakatwhitespace=false,
+    breakatwhitespace=true,
     showstringspaces=false,
     frame=single,
-    framesep=5pt,
+    framesep=3pt,
     framerule=0pt,
     rulecolor=\color{codebg},
-    xleftmargin=5pt,
-    xrightmargin=5pt,
-    aboveskip=12pt,
-    belowskip=12pt,
+    xleftmargin=3pt,
+    xrightmargin=3pt,
+    aboveskip=8pt,
+    belowskip=8pt,
     tabsize=2,
     captionpos=b,
     numbers=none,
-    breakindent=0pt,
+    breakindent=15pt,
     postbreak=\mbox{\textcolor{codeoperator}{$\hookrightarrow$}\space},
     columns=flexible,
     keepspaces=true,
     extendedchars=true,
     inputencoding=utf8,
-    escapeinside={(*@}{@*)}
+    escapeinside={(*@}{@*)},
+    linewidth=\textwidth,
+    resetmargins=true
 }
 
 % Enhanced code formatting for better line wrapping
 \usepackage{fancyvrb}
 \fvset{
-    fontsize=\small,
+    fontsize=\scriptsize,
     breaklines=true,
-    breakanywhere=false,
+    breakanywhere=true,
     breakautoindent=true,
-    breakindent=0pt,
-    xleftmargin=5pt,
-    xrightmargin=5pt,
+    breakindent=15pt,
+    xleftmargin=3pt,
+    xrightmargin=3pt,
     frame=single,
-    framesep=5pt,
+    framesep=3pt,
     rulecolor=\color{codebg},
     fillcolor=\color{codebg},
     formatcom=\color{codetext}
@@ -164,17 +166,17 @@
 % Code block styling for Pandoc with improved wrapping
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
     commandchars=\\\{\},
-    fontsize=\small,
+    fontsize=\scriptsize,
     backgroundcolor=\color{codebg},
     formatcom=\color{codetext},
     breaklines=true,
-    breakanywhere=false,
+    breakanywhere=true,
     breakautoindent=true,
-    breakindent=0pt,
-    xleftmargin=5pt,
-    xrightmargin=5pt,
+    breakindent=15pt,
+    xleftmargin=3pt,
+    xrightmargin=3pt,
     frame=single,
-    framesep=5pt,
+    framesep=3pt,
     rulecolor=\color{codebg}
 }
 
