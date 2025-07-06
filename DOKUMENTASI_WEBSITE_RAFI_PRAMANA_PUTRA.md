@@ -21,7 +21,24 @@
 
 ### 1.1 Informasi Proyek
 
-**[SCREENSHOT BAGIAN: Halaman utama website - tampilan hero section dengan background, nama "Rafi Pramana Putra", subtitle "Law Student & Community Leader", dan dua tombol]**
+**[SCREENSHOT BAGIAN: Halaman utama website - tampilan hero section dengan background, nama "Rafi Pramana Putra", subtitle "Law Student & Community Leader", dan dua tombol]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`n
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - **Nama Proyek:** Website Portofolio Rafi Pramana Putra
 - **Jenis:** Aplikasi web portofolio personal dengan sistem admin
@@ -155,6 +172,25 @@ laravel/
 
 ### 3.1 Backend Dependencies (Composer)
 
+**[SCREENSHOT BAGIAN: File composer.json terbuka di editor, tunjukkan dependencies di bagian require dan require-dev]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`n
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
+
 ```json
 {
     "require": {
@@ -186,6 +222,25 @@ laravel/
 
 ### 3.2 Frontend Dependencies (NPM)
 
+**[SCREENSHOT BAGIAN: File package.json terbuka di editor, fokus pada devDependencies]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`n
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
+
 ```json
 {
     "devDependencies": {
@@ -210,6 +265,25 @@ laravel/
 - **Performance**: Optimized production builds dengan automatic code splitting dan asset optimization
 
 ### 3.3 Build Configuration dan Performance
+
+**[SCREENSHOT BAGIAN: File vite.config.js di editor menunjukkan konfigurasi Laravel plugin]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`n
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 ```javascript
 // vite.config.js
@@ -639,7 +713,24 @@ Controller ini ensures reliable communication channel while maintaining security
 
 ### 6.1 Public Routes dan URL Structure
 
-**[SCREENSHOT BAGIAN: File routes/web.php terbuka di editor, tunjukkan public routes section dengan clean URL patterns]**
+**[SCREENSHOT BAGIAN: File routes/web.php terbuka di editor, tunjukkan public routes section dengan clean URL patterns]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`n
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 ```php
 <?php
@@ -713,9 +804,7 @@ Public routing system designed untuk optimal user experience dan SEO dengan clea
 
 ### 6.2 Admin Routes dan Security
 
-**[SCREENSHOT BAGIAN: File routes/web.php, fokus pada admin routes group dengan middleware protection]**
-
-Admin routing system implements comprehensive security measures dengan organized route grouping:
+**[SCREENSHOT BAGIAN: File routes/web.php, fokus pada admin routes group dengan middleware protection]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nAdmin routing system implements comprehensive security measures dengan organized route grouping:
 
 **Authentication Routes:**
 - **Login Access**: `/admin/login` - Secure login page dengan CSRF protection
@@ -746,9 +835,7 @@ System ini ensures secure administrative access while maintaining clean organiza
 
 ### 7.1 Layout System dan Component Architecture
 
-**[SCREENSHOT BAGIAN: File resources/views/layouts/app.blade.php di editor, tunjukkan struktur layout dengan sections dan includes]**
-
-Layout system menggunakan Blade templating engine dengan modular component architecture untuk maintainable dan reusable code:
+**[SCREENSHOT BAGIAN: File resources/views/layouts/app.blade.php di editor, tunjukkan struktur layout dengan sections dan includes]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nLayout system menggunakan Blade templating engine dengan modular component architecture untuk maintainable dan reusable code:
 
 **Master Layout Features:**
 - **Dynamic Head Section**: Flexible meta tags, title, dan description untuk SEO optimization
@@ -772,9 +859,7 @@ Layout system provides solid foundation untuk consistent design while allowing f
 
 ### 7.2 Homepage Template dan Content Sections
 
-**[SCREENSHOT BAGIAN: File resources/views/portofolio.blade.php di editor, tunjukkan hero section dan content organization]**
-
-Homepage template mengorganize content dalam engaging sections yang tells compelling professional story:
+**[SCREENSHOT BAGIAN: File resources/views/portofolio.blade.php di editor, tunjukkan hero section dan content organization]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nHomepage template mengorganize content dalam engaging sections yang tells compelling professional story:
 
 **Hero Section:**
 - **Visual Impact**: Full-screen hero dengan background image dan overlay untuk dramatic effect
@@ -802,9 +887,7 @@ Homepage template mengorganize content dalam engaging sections yang tells compel
 
 ### 7.3 Admin Panel Views dan Interface Design
 
-**[SCREENSHOT BAGIAN: Admin panel dashboard view di browser, tunjukkan statistics cards dan navigation menu]**
-
-Admin panel menggunakan clean, functional design yang prioritizes usability dan efficiency:
+**[SCREENSHOT BAGIAN: Admin panel dashboard view di browser, tunjukkan statistics cards dan navigation menu]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nAdmin panel menggunakan clean, functional design yang prioritizes usability dan efficiency:
 
 **Dashboard Interface:**
 - **Statistics Overview**: Visual statistics cards showing project counts, message status, dan activity metrics
@@ -830,9 +913,7 @@ Admin interface designed untuk efficiency while maintaining professional appeara
 
 ### 8.1 TailwindCSS Implementation dan Custom Classes
 
-**[SCREENSHOT BAGIAN: File resources/css/app.css terbuka di editor dengan custom TailwindCSS utilities dan components]**
-
-Styling system menggunakan TailwindCSS sebagai foundation dengan custom extensions untuk unique design elements:
+**[SCREENSHOT BAGIAN: File resources/css/app.css terbuka di editor dengan custom TailwindCSS utilities dan components]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nStyling system menggunakan TailwindCSS sebagai foundation dengan custom extensions untuk unique design elements:
 
 **TailwindCSS Integration:**
 - **Utility-First Approach**: Rapid development dengan utility classes untuk consistent design patterns
@@ -856,9 +937,7 @@ Design system ensures consistent visual language while providing flexibility unt
 
 ### 8.2 Interactive Animations dan User Experience
 
-**[SCREENSHOT BAGIAN: Browser developer tools showing animation timeline dan CSS transitions in action]**
-
-Animation system designed untuk enhancing user experience tanpa overwhelming performance atau usability:
+**[SCREENSHOT BAGIAN: Browser developer tools showing animation timeline dan CSS transitions in action]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nAnimation system designed untuk enhancing user experience tanpa overwhelming performance atau usability:
 
 **Scroll-Based Animations:**
 - **AOS Integration**: Animate On Scroll library untuk progressive content revelation
@@ -884,9 +963,7 @@ Animation system creates engaging user experience while maintaining accessibilit
 
 ### 9.1 Frontend JavaScript dan User Interactions
 
-**[SCREENSHOT BAGIAN: File resources/js/app.js terbuka di editor dengan event handlers dan utility functions]**
-
-```javascript
+**[SCREENSHOT BAGIAN: File resources/js/app.js terbuka di editor dengan event handlers dan utility functions]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`n```javascript
 // resources/js/app.js
 import './bootstrap';
 
@@ -1009,9 +1086,7 @@ Frontend JavaScript provides enhanced interactivity dan smooth user experience d
 
 ### 9.2 Admin Panel JavaScript dan Management Features
 
-**[SCREENSHOT BAGIAN: Admin panel dengan interactive elements seperti charts, forms, dan bulk actions]**
-
-Admin panel JavaScript provides sophisticated management tools dengan focus pada efficiency dan usability:
+**[SCREENSHOT BAGIAN: Admin panel dengan interactive elements seperti charts, forms, dan bulk actions]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nAdmin panel JavaScript provides sophisticated management tools dengan focus pada efficiency dan usability:
 
 **Dashboard Features:**
 - **Real-Time Statistics**: Dynamic charts dan graphs untuk project dan message analytics
@@ -1043,9 +1118,7 @@ Admin JavaScript ensures efficient workflow while maintaining security dan provi
 
 ### 10.1 Authentication System dan Security
 
-**[SCREENSHOT BAGIAN: Admin login page dengan form fields dan security features visible]**
-
-Admin authentication system implements multi-layer security dengan user-friendly interface:
+**[SCREENSHOT BAGIAN: Admin login page dengan form fields dan security features visible]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nAdmin authentication system implements multi-layer security dengan user-friendly interface:
 
 **Login System:**
 - **Dual Authentication**: Support untuk username atau email-based login untuk flexibility
@@ -1069,9 +1142,7 @@ Security system ensures administrative access remains secure while providing smo
 
 ### 10.2 Dashboard Overview dan Analytics
 
-**[SCREENSHOT BAGIAN: Admin dashboard dengan statistics cards, charts, dan recent activity feed]**
-
-Dashboard provides comprehensive overview dari site activity dengan actionable insights:
+**[SCREENSHOT BAGIAN: Admin dashboard dengan statistics cards, charts, dan recent activity feed]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nDashboard provides comprehensive overview dari site activity dengan actionable insights:
 
 **Statistics Overview:**
 - **Content Metrics**: Real-time counts dari projects, experiences, organizations dengan active/inactive breakdown
@@ -1095,9 +1166,7 @@ Dashboard designed untuk providing comprehensive insights while enabling quick a
 
 ### 10.3 Project Management Interface
 
-**[SCREENSHOT BAGIAN: Project management interface showing project list, edit forms, dan bulk actions]**
-
-Project management system provides comprehensive tools untuk content lifecycle management:
+**[SCREENSHOT BAGIAN: Project management interface showing project list, edit forms, dan bulk actions]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nProject management system provides comprehensive tools untuk content lifecycle management:
 
 **Content Creation:**
 - **Rich Form Interface**: Comprehensive forms untuk creating projects, experiences, dan organizations
@@ -1127,9 +1196,7 @@ System designed untuk efficient content management while maintaining data safety
 
 ### 10.4 Message Management dan Communication
 
-**[SCREENSHOT BAGIAN: Message center interface dengan message list, status indicators, dan reply functionality]**
-
-Message management system streamlines communication workflow dengan comprehensive tracking dan response capabilities:
+**[SCREENSHOT BAGIAN: Message center interface dengan message list, status indicators, dan reply functionality]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nMessage management system streamlines communication workflow dengan comprehensive tracking dan response capabilities:
 
 **Message Organization:**
 - **Status-Based Filtering**: Organized view berdasarkan read/unread/replied status untuk efficient workflow
@@ -1161,9 +1228,7 @@ System ensures no communication falls through cracks while providing efficient t
 
 ### 11.1 Environment Setup dan Configuration
 
-**[SCREENSHOT BAGIAN: Production server configuration atau deployment pipeline interface]**
-
-Deployment system designed untuk reliable, scalable hosting dengan proper environment management:
+**[SCREENSHOT BAGIAN: Production server configuration atau deployment pipeline interface]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nDeployment system designed untuk reliable, scalable hosting dengan proper environment management:
 
 **Environment Configuration:**
 - **Multi-Environment Support**: Separate configurations untuk development, staging, dan production environments
@@ -1191,9 +1256,7 @@ Deployment system designed untuk reliable, scalable hosting dengan proper enviro
 
 ### 11.2 Performance Optimization Strategies
 
-**[SCREENSHOT BAGIAN: Performance metrics dashboard atau optimization tools interface]**
-
-Performance optimization ensures fast, responsive user experience across all devices:
+**[SCREENSHOT BAGIAN: Performance metrics dashboard atau optimization tools interface]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nPerformance optimization ensures fast, responsive user experience across all devices:
 
 **Frontend Optimization:**
 - **Asset Optimization**: Vite-based build process dengan automatic minification dan compression
@@ -1221,9 +1284,7 @@ Performance optimization ensures fast, responsive user experience across all dev
 
 ### 11.3 Security Measures dan Best Practices
 
-**[SCREENSHOT BAGIAN: Security dashboard atau SSL certificate management interface]**
-
-Comprehensive security implementation protecting against common web vulnerabilities:
+**[SCREENSHOT BAGIAN: Security dashboard atau SSL certificate management interface]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nComprehensive security implementation protecting against common web vulnerabilities:
 
 **Application Security:**
 - **Input Validation**: Comprehensive input validation dan sanitization untuk all user inputs
@@ -1253,9 +1314,7 @@ Comprehensive security implementation protecting against common web vulnerabilit
 
 ### 12.1 Auto PDF Generation System
 
-**[SCREENSHOT BAGIAN: GitHub Actions workflow interface showing successful run dan artifact generation]**
-
-Automated documentation system yang converts Markdown ke professional PDF dengan styling dan release management:
+**[SCREENSHOT BAGIAN: GitHub Actions workflow interface showing successful run dan artifact generation]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nAutomated documentation system yang converts Markdown ke professional PDF dengan styling dan release management:
 
 **Workflow Features:**
 - **Automatic Triggers**: Workflow triggers pada setiap push ke main branch untuk ensuring up-to-date documentation
@@ -1283,9 +1342,7 @@ Automated documentation system yang converts Markdown ke professional PDF dengan
 
 ### 12.2 Styling Features dan Professional Output
 
-**[SCREENSHOT BAGIAN: Generated PDF sample showing professional formatting, code blocks, dan typography]**
-
-Professional PDF output dengan comprehensive styling system designed untuk technical documentation:
+**[SCREENSHOT BAGIAN: Generated PDF sample showing professional formatting, code blocks, dan typography]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nProfessional PDF output dengan comprehensive styling system designed untuk technical documentation:
 
 **Typography System:**
 - **Professional Fonts**: High-quality font selection dengan proper hierarchy dan readability
@@ -1317,9 +1374,7 @@ System produces publication-quality documentation yang suitable untuk profession
 
 ### 13.1 Implementation Details dan Database Design
 
-**[SCREENSHOT BAGIAN: Database migration file atau model showing SoftDeletes trait implementation]**
-
-Soft delete implementation provides data safety dengan recovery options while maintaining clean user interfaces:
+**[SCREENSHOT BAGIAN: Database migration file atau model showing SoftDeletes trait implementation]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nSoft delete implementation provides data safety dengan recovery options while maintaining clean user interfaces:
 
 **Technical Implementation:**
 - **Laravel SoftDeletes Trait**: Built-in Laravel functionality untuk soft delete dengan minimal code overhead
@@ -1341,9 +1396,7 @@ Soft delete implementation provides data safety dengan recovery options while ma
 
 ### 13.2 Admin Interface dan Recovery Management
 
-**[SCREENSHOT BAGIAN: Admin trash management interface showing deleted items dan restore options]**
-
-User-friendly admin interface untuk managing deleted content dengan comprehensive recovery options:
+**[SCREENSHOT BAGIAN: Admin trash management interface showing deleted items dan restore options]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nUser-friendly admin interface untuk managing deleted content dengan comprehensive recovery options:
 
 **Trash Management:**
 - **Trash View**: Dedicated interface untuk viewing deleted items dengan clear indicators
@@ -1375,9 +1428,7 @@ System ensures data safety while providing administrative flexibility dan mainta
 
 ### 14.1 Quick Access Documentation
 
-**[SCREENSHOT BAGIAN: QUICK_ACCESS.md file dan QUICK_PDF_GUIDE.md showing easy-to-follow instructions]**
-
-Comprehensive support documentation ensuring easy access dan maintenance untuk both technical dan non-technical users:
+**[SCREENSHOT BAGIAN: QUICK_ACCESS.md file dan QUICK_PDF_GUIDE.md showing easy-to-follow instructions]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nComprehensive support documentation ensuring easy access dan maintenance untuk both technical dan non-technical users:
 
 **Quick Access Features:**
 - **Direct Links**: Pre-configured links untuk common administrative tasks dan documentation editing
@@ -1486,4 +1537,5 @@ Website Portofolio Rafi Pramana Putra represents successful implementation dari 
 - **Professional Presentation**: Credible, professional appearance yang builds trust
 
 The platform successfully achieves its goals dari showcasing professional capabilities while providing practical tools untuk ongoing career development dan professional networking.`n`n
+
 
