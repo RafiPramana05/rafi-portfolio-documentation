@@ -182,6 +182,11 @@ Aplikasi menggunakan arsitektur Model-View-Controller (MVC) Laravel dengan kompo
 
 ### 3.1 Backend Dependencies (Composer)
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File composer.json terbuka di editor, tunjukkan dependencies di bagian require dan require-dev]**
 
 &nbsp;
 
@@ -224,6 +229,11 @@ Aplikasi menggunakan arsitektur Model-View-Controller (MVC) Laravel dengan kompo
 
 ### 3.2 Frontend Dependencies (NPM)
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File package.json terbuka di editor, fokus pada devDependencies]**
 
 &nbsp;
 
@@ -251,6 +261,11 @@ Aplikasi menggunakan arsitektur Model-View-Controller (MVC) Laravel dengan kompo
 
 ### 3.3 Build Configuration
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File vite.config.js di editor menunjukkan konfigurasi Laravel plugin]**
 
 &nbsp;
 
@@ -278,6 +293,11 @@ Vite dikonfigurasi untuk handle CSS dan JavaScript bundling dengan Laravel plugi
 
 ### 4.1 Model User
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File app/Models/User.php terbuka di editor, tunjukkan class structure dan properties]**
 
 &nbsp;
 
@@ -301,6 +321,11 @@ Model default Laravel untuk user authentication dengan fields name, email, dan p
 
 ### 4.2 Model Project
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File app/Models/Project.php di editor, tunjukkan fillable array dan methods]**
 
 &nbsp;
 
@@ -353,6 +378,11 @@ Model utama untuk mengelola proyek, pengalaman, dan organisasi dengan fitur:
 
 ### 4.3 Model Contact
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File app/Models/Contact.php di editor, fokus pada scopes dan fillable]**
 
 &nbsp;
 
@@ -380,6 +410,11 @@ Model untuk mengelola pesan kontak dengan fitur:
 
 ### 4.4 Model Admin
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File app/Models/Admin.php di editor, tunjukkan inheritance dari Authenticatable]**
 
 &nbsp;
 
@@ -411,6 +446,11 @@ Model untuk authentication admin panel dengan:
 
 ### 5.1 PortofolioController
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File app/Http/Controllers/PortofolioController.php terbuka di editor]**
 
 &nbsp;
 
@@ -434,6 +474,11 @@ Controller sederhana untuk menampilkan halaman utama portofolio. Hanya memiliki 
 
 ### 5.2 ProjectController
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File app/Http/Controllers/ProjectController.php, fokus pada method index dengan query chains]**
 
 &nbsp;
 
@@ -486,6 +531,11 @@ Controller untuk halaman daftar proyek lengkap dengan method index() yang:
 
 ### 5.3 AdminController
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File app/Http/Controllers/AdminController.php, tunjukkan method login dengan Hash::check dan Session handling]**
 
 &nbsp;
 
@@ -513,6 +563,11 @@ Controller untuk sistem admin dengan multiple methods:
 
 ### 5.4 ContactController
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File app/Http/Controllers/ContactController.php di editor, tunjukkan method store dengan validasi]**
 
 &nbsp;
 
@@ -569,6 +624,11 @@ Controller untuk mengelola pesan kontak dengan features:
 
 ### 6.2 Admin Routes Group
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File routes/web.php terbuka di editor, tunjukkan struktur routing dengan group dan prefix]**
 
 &nbsp;
 
@@ -622,6 +682,11 @@ Semua admin routes menggunakan session-based authentication middleware.
 
 ### 7.1 Layout System
 
+&nbsp;
+
+&nbsp;
+
+**[SCREENSHOT BAGIAN: File resources/views/layouts/app.blade.php di editor, tunjukkan struktur layout]**
 
 &nbsp;
 
