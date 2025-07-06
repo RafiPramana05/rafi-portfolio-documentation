@@ -52,7 +52,43 @@ Website ini dikembangkan sebagai platform portofolio digital untuk **Rafi Praman
 - **CV Download**: Akses download CV dalam format PDF
 - **Social Integration**: Integrasi dengan LinkedIn, WhatsApp, dan Email
 
-**[SCREENSHOT BAGIAN: Halaman utama website - tampilan hero section dengan background, nama "Rafi Pramana Putra", subtitle "Law Student & Community Leader", dan dua tombol]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 ```php
 // routes/web.php - Route utama homepage
@@ -80,7 +116,43 @@ Website ini menggunakan struktur standar Laravel dengan organisasi sebagai berik
 - **routes/**: Definisi routing untuk web dan API endpoints
 - **config/**: File konfigurasi aplikasi Laravel
 
-**[SCREENSHOT BAGIAN: File explorer/IDE menunjukkan struktur folder lengkap dengan app/, resources/, database/, dll]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 ```bash
 # Struktur folder utama Laravel
@@ -109,7 +181,25 @@ Aplikasi menggunakan arsitektur Model-View-Controller (MVC) Laravel dengan kompo
 ## KONFIGURASI DEPENDENCIES
 
 ### 3.1 Backend Dependencies (Composer)
-**[SCREENSHOT BAGIAN: File composer.json terbuka di editor, tunjukkan dependencies di bagian require dan require-dev]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 ```json
 {
@@ -133,7 +223,25 @@ Aplikasi menggunakan arsitektur Model-View-Controller (MVC) Laravel dengan kompo
 - **Laravel Sail**: Docker environment untuk development
 
 ### 3.2 Frontend Dependencies (NPM)
-**[SCREENSHOT BAGIAN: File package.json terbuka di editor, fokus pada devDependencies]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - **TailwindCSS 4.0**: Utility-first CSS framework untuk styling
 - **Vite 6.2.4**: Modern build tool dengan hot module replacement
@@ -142,7 +250,25 @@ Aplikasi menggunakan arsitektur Model-View-Controller (MVC) Laravel dengan kompo
 - **Concurrently**: Menjalankan multiple commands secara bersamaan
 
 ### 3.3 Build Configuration
-**[SCREENSHOT BAGIAN: File vite.config.js di editor menunjukkan konfigurasi Laravel plugin]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 Vite dikonfigurasi untuk handle CSS dan JavaScript bundling dengan Laravel plugin, support hot reload, dan optimasi untuk production build.
 
@@ -151,12 +277,48 @@ Vite dikonfigurasi untuk handle CSS dan JavaScript bundling dengan Laravel plugi
 ## DATABASE MODELS
 
 ### 4.1 Model User
-**[SCREENSHOT BAGIAN: File app/Models/User.php terbuka di editor, tunjukkan class structure dan properties]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 Model default Laravel untuk user authentication dengan fields name, email, dan password. Menggunakan HasFactory trait untuk testing dan Notifiable untuk notifications.
 
 ### 4.2 Model Project
-**[SCREENSHOT BAGIAN: File app/Models/Project.php di editor, tunjukkan fillable array dan methods]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 ```php
 class Project extends Model
@@ -190,7 +352,25 @@ Model utama untuk mengelola proyek, pengalaman, dan organisasi dengan fitur:
 - **Accessors**: Gradient class generator dan tags formatting
 
 ### 4.3 Model Contact
-**[SCREENSHOT BAGIAN: File app/Models/Contact.php di editor, fokus pada scopes dan fillable]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 Model untuk mengelola pesan kontak dengan fitur:
 - **Status Tracking**: Unread, read, replied status
@@ -199,7 +379,25 @@ Model untuk mengelola pesan kontak dengan fitur:
 - **Mark as Read**: Method untuk mengubah status pesan
 
 ### 4.4 Model Admin
-**[SCREENSHOT BAGIAN: File app/Models/Admin.php di editor, tunjukkan inheritance dari Authenticatable]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 Model untuk authentication admin panel dengan:
 - **Username Auth**: Menggunakan username instead of email
@@ -212,12 +410,48 @@ Model untuk authentication admin panel dengan:
 ## CONTROLLERS DAN LOGIC
 
 ### 5.1 PortofolioController
-**[SCREENSHOT BAGIAN: File app/Http/Controllers/PortofolioController.php terbuka di editor]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 Controller sederhana untuk menampilkan halaman utama portofolio. Hanya memiliki method index() yang mengembalikan view portofolio.blade.php.
 
 ### 5.2 ProjectController
-**[SCREENSHOT BAGIAN: File app/Http/Controllers/ProjectController.php, fokus pada method index dengan query chains]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 ```php
 class ProjectController extends Controller
@@ -251,7 +485,25 @@ Controller untuk halaman daftar proyek lengkap dengan method index() yang:
 - Mengembalikan view dengan data yang sudah dikelompokkan
 
 ### 5.3 AdminController
-**[SCREENSHOT BAGIAN: File app/Http/Controllers/AdminController.php, tunjukkan method login dengan Hash::check dan Session handling]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 Controller untuk sistem admin dengan multiple methods:
 - **loginForm()**: Menampilkan form login
@@ -260,7 +512,25 @@ Controller untuk sistem admin dengan multiple methods:
 - **logout()**: Menghapus session dan redirect ke login
 
 ### 5.4 ContactController
-**[SCREENSHOT BAGIAN: File app/Http/Controllers/ContactController.php di editor, tunjukkan method store dengan validasi]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 Controller untuk form kontak dengan method store() yang:
 - Validasi input form (name, email, subject, message)
@@ -298,7 +568,25 @@ Controller untuk mengelola pesan kontak dengan features:
 - **Contact Form**: `POST /contact` untuk submit form kontak
 
 ### 6.2 Admin Routes Group
-**[SCREENSHOT BAGIAN: File routes/web.php terbuka di editor, tunjukkan struktur routing dengan group dan prefix]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 ```php
 // Public Routes
@@ -333,7 +621,25 @@ Semua admin routes menggunakan session-based authentication middleware.
 ## BLADE TEMPLATES DAN VIEWS
 
 ### 7.1 Layout System
-**[SCREENSHOT BAGIAN: File resources/views/layouts/app.blade.php di editor, tunjukkan struktur layout]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - **Layout Utama**: `layouts/app.blade.php` dengan navbar, content area, dan footer
 - **Partials**: Component navbar, footer, dan reusable elements
@@ -343,7 +649,25 @@ Semua admin routes menggunakan session-based authentication middleware.
 Website homepage terdiri dari beberapa section utama:
 
 #### Hero Section
-**[SCREENSHOT BAGIAN: Hero section website - background image, nama besar di tengah, subtitle, dan dua tombol biru]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 ```html
 <!-- Hero Section -->
@@ -383,7 +707,25 @@ Website homepage terdiri dari beberapa section utama:
 - Responsive design untuk mobile dan desktop
 
 #### About Section
-**[SCREENSHOT BAGIAN: About section - grid 2 kolom dengan profil di kiri dan mission statement dengan icon timbangan di kanan]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - Grid 2 kolom dengan professional profile dan mission statement
 - Glass morphism cards dengan hover effects
@@ -391,7 +733,25 @@ Website homepage terdiri dari beberapa section utama:
 - AOS (Animate On Scroll) animations
 
 #### Skills Section
-**[SCREENSHOT BAGIAN: Skills section - 3 kartu dalam grid dengan icons berwarna dan skill level badges]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - Grid 3 kolom dengan skill categories
 - Level indicators (Expert, Advanced, Proficient, Native, Fluent)
@@ -399,7 +759,25 @@ Website homepage terdiri dari beberapa section utama:
 - Icon-based visual hierarchy
 
 #### Projects Preview Section
-**[SCREENSHOT BAGIAN: Projects section - 3 kartu proyek dengan gradient headers dan tombol "View More Projects" di kanan bawah]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - Grid layout dengan project cards
 - Gradient backgrounds dan icons
@@ -407,7 +785,25 @@ Website homepage terdiri dari beberapa section utama:
 - "View More Projects" button dengan smooth animations
 
 #### Awards Section
-**[SCREENSHOT BAGIAN: Awards section - timeline layout dengan achievement cards dan decorative elements]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - Timeline layout untuk pencapaian
 - Icon-based award representation
@@ -415,7 +811,25 @@ Website homepage terdiri dari beberapa section utama:
 - Responsive card layout
 
 #### Contact Section
-**[SCREENSHOT BAGIAN: Contact section - form kontak dengan social media links dan validasi]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 ```html
 <!-- Contact Section -->
@@ -491,7 +905,25 @@ public function store(Request $request)
 - Success/error message handling
 
 ### 7.3 Project Detail Page
-**[SCREENSHOT BAGIAN: Halaman project lengkap - grid kategorisasi proyek dengan filter dan detailed cards]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 Halaman terpisah untuk menampilkan semua proyek dengan:
 - Kategorisasi berdasarkan type (Project, Experience, Organization)
@@ -500,7 +932,25 @@ Halaman terpisah untuk menampilkan semua proyek dengan:
 - External links dan social media integration
 
 ### 7.4 Admin Panel Views
-**[SCREENSHOT BAGIAN: Admin panel - dashboard dengan statistics cards, project management table, dan message inbox]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - **Login Page**: Form authentication dengan validation
 - **Dashboard**: Statistics cards dan overview charts
@@ -575,7 +1025,25 @@ Website menggunakan TailwindCSS 4.0 dengan custom configurations:
 ## FITUR ADMIN PANEL
 
 ### 10.1 Authentication System
-**[SCREENSHOT BAGIAN: Admin login page - form username dan password dengan validation]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - **Username-Based Login**: Admin login menggunakan username instead of email
 - **Session Management**: PHP session untuk maintain login state
@@ -583,7 +1051,25 @@ Website menggunakan TailwindCSS 4.0 dengan custom configurations:
 - **Login Tracking**: Track last login timestamp untuk security
 
 ### 10.2 Dashboard Overview
-**[SCREENSHOT BAGIAN: Admin dashboard - statistics cards dengan angka total projects, recent activity, dan quick actions]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - **Statistics Cards**: Total projects, active projects, dan type breakdown
 - **Quick Actions**: Shortcut links ke frequently used features
@@ -591,7 +1077,25 @@ Website menggunakan TailwindCSS 4.0 dengan custom configurations:
 - **System Status**: Database connections dan application health
 
 ### 10.3 Project Management
-**[SCREENSHOT BAGIAN: Admin project management - data table dengan list projects, edit/delete buttons, dan form create/edit]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - **CRUD Operations**: Create, Read, Update, Delete untuk projects
 - **Bulk Operations**: Multiple project actions sekaligus
@@ -600,7 +1104,25 @@ Website menggunakan TailwindCSS 4.0 dengan custom configurations:
 - **Ordering System**: Drag-and-drop untuk project ordering
 
 ### 10.4 Message Management
-**[SCREENSHOT BAGIAN: Admin message management - inbox interface dengan list pesan, status indicators, dan bulk actions]**
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 
 - **Inbox Interface**: Email-like interface untuk contact messages
 - **Status Tracking**: Unread, read, replied status indicators

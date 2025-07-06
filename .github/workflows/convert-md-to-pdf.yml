@@ -11,6 +11,7 @@ permissions:
 jobs:
   convert-to-pdf:
     runs-on: ubuntu-latest
+    timeout-minutes: 4
     
     steps:
     - name: Checkout Repository
@@ -22,152 +23,56 @@ jobs:
         path: |
           /usr/share/texlive
           /usr/local/texlive
-        key: latex-packages-${{ runner.os }}-v2
+          ~/.cache/pandoc
+        key: latex-packages-${{ runner.os }}-v3
         restore-keys: |
           latex-packages-${{ runner.os }}-
           
-    - name: Setup Pandoc
-      uses: r-lib/actions/setup-pandoc@v2
-      with:
-        pandoc-version: '3.1.8'
-        
-    - name: Install LaTeX with XeLaTeX (Optimized)
+    - name: Setup Pandoc (Lightweight)
       run: |
-        # Only install if not cached
-        if ! command -v xelatex &> /dev/null; then
-          sudo apt-get update -qq
+        # Use Ubuntu's pandoc (faster than custom install)
+        sudo apt-get update -qq
+        sudo apt-get install -y --no-install-recommends pandoc
+        
+    - name: Install LaTeX (Minimal + Cache Check)
+      run: |
+        # Check if already cached
+        if command -v pdflatex &> /dev/null; then
+          echo "LaTeX already cached"
+        else
+          echo "Installing minimal LaTeX"
           sudo apt-get install -y --no-install-recommends \
             texlive-latex-base \
             texlive-fonts-recommended \
-            texlive-xetex \
             texlive-latex-extra \
             texlive-latex-recommended \
-            lmodern \
-            cm-super
-          sudo apt-get install -y --no-install-recommends fonts-dejavu-core
+            lmodern
         fi
         
     - name: Create Simplified CSS
       run: |
         echo "/* Minimal CSS - LaTeX handles most styling */" > simple-style.css
         
-    - name: Create Optimized LaTeX Header
+    - name: Create Ultra-Fast LaTeX Header
       run: |
         cat > latex-header.tex << 'EOF'
-        % Optimized LaTeX header for code blocks
+        % Ultra-fast LaTeX header (minimal packages)
         \usepackage{xcolor}
-        \usepackage{fancyvrb}
-        
-        % Define colors
         \definecolor{codebg}{RGB}{30, 30, 30}
         \definecolor{codetext}{RGB}{212, 212, 212}
         \definecolor{keywordcolor}{RGB}{197, 134, 192}
         \definecolor{stringcolor}{RGB}{206, 145, 120}
         \definecolor{commentcolor}{RGB}{106, 153, 85}
-        
-        % Simple verbatim environment for code blocks
-        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
-          fontsize=\small,
-          commandchars=\\\{\}
-        }
-        
-        % Redefine Shaded environment for dark backgrounds
-        \usepackage{framed}
-        \definecolor{shadecolor}{RGB}{30, 30, 30}
-        \renewenvironment{Shaded}{
-          \color{white}
-          \begin{snugshade}
-        }{
-          \end{snugshade}
-        }
         EOF
         
-    - name: Prepare Markdown for PDF (Replace Emoji and Fix Code)
+    - name: Fast Markdown Processing
       run: |
-        # Replace emoji first
-        sed 's/✅/[CHECKMARK]/g; s/🚀/[ROCKET]/g; s/📄/[DOCUMENT]/g; s/⚡/[LIGHTNING]/g; s/🎯/[TARGET]/g; s/📊/[CHART]/g; s/🔄/[REFRESH]/g; s/✨/[SPARKLES]/g; s/📅/[CALENDAR]/g; s/🎉/[PARTY]/g; s/💡/[BULB]/g; s/🔧/[WRENCH]/g; s/📁/[FOLDER]/g; s/🏷️/[TAG]/g; s/📥/[INBOX]/g; s/📝/[MEMO]/g; s/🎛️/[CONTROL]/g' "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" > "TEMP_EMOJI_FIXED.md"
+        # Simple emoji replacement (faster than complex regex)
+        sed 's/✅/[CHECKMARK]/g; s/🚀/[ROCKET]/g; s/📄/[DOCUMENT]/g; s/⚡/[LIGHTNING]/g; s/🎯/[TARGET]/g; s/📊/[CHART]/g; s/🔄/[REFRESH]/g; s/✨/[SPARKLES]/g; s/📅/[CALENDAR]/g; s/🎉/[PARTY]/g; s/💡/[BULB]/g; s/🔧/[WRENCH]/g; s/📁/[FOLDER]/g; s/🏷️/[TAG]/g; s/📥/[INBOX]/g; s/📝/[MEMO]/g; s/🎛️/[CONTROL]/g' "DOKUMENTASI_WEBSITE_RAFI_PRAMANA_PUTRA.md" > "DOKUMENTASI_CLEAN.md"
         
-        # Process code blocks to break long lines
-        python3 << 'EOF'
-        import re
-        import textwrap
-        
-        def wrap_code_blocks(content):
-            # Pattern to match code blocks
-            pattern = r'```(\w*)\n(.*?)\n```'
-            
-            def wrap_code_content(match):
-                language = match.group(1)
-                code_content = match.group(2)
-                
-                # Split into lines and wrap each line that's too long
-                lines = code_content.split('\n')
-                wrapped_lines = []
-                
-                for line in lines:
-                    if len(line) > 80:  # If line is longer than 80 characters
-                        # Wrap the line, preserving indentation
-                        indent = len(line) - len(line.lstrip())
-                        indent_str = ' ' * indent
-                        
-                        # Remove indentation, wrap, then re-add indentation
-                        clean_line = line.strip()
-                        wrapped = textwrap.fill(clean_line, 
-                                              width=80-indent, 
-                                              subsequent_indent='  ',
-                                              break_long_words=True,
-                                              break_on_hyphens=False)
-                        
-                        # Add original indentation back
-                        wrapped_with_indent = '\n'.join(indent_str + wrapped_line.lstrip() 
-                                                       for wrapped_line in wrapped.split('\n'))
-                        wrapped_lines.append(wrapped_with_indent)
-                    else:
-                        wrapped_lines.append(line)
-                
-                return f'```{language}\n' + '\n'.join(wrapped_lines) + '\n```'
-            
-            # Apply the wrapping to all code blocks
-            return re.sub(pattern, wrap_code_content, content, flags=re.DOTALL)
-        
-        # Read the file
-        with open('TEMP_EMOJI_FIXED.md', 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        # Process code blocks
-        processed_content = wrap_code_blocks(content)
-        
-        # Write the result
-        with open('DOKUMENTASI_CLEAN.md', 'w', encoding='utf-8') as f:
-            f.write(processed_content)
-        
-        print("Code blocks processed for better PDF wrapping")
-        EOF
-        
-    - name: Convert MD to PDF with Styling
+    - name: Convert MD to PDF (Fast Mode)
       run: |
-        # Try XeLaTeX first, fallback to pdflatex if failed
-        pandoc "DOKUMENTASI_CLEAN.md" \
-          -o "Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf" \
-          --from markdown \
-          --to pdf \
-          --pdf-engine=xelatex \
-          --highlight-style=breezedark \
-          --include-in-header=latex-header.tex \
-          --toc \
-          --toc-depth=3 \
-          --number-sections \
-          -V geometry:margin=2.5cm \
-          -V mainfont="DejaVu Sans" \
-          -V monofont="DejaVu Sans Mono" \
-          -V fontsize=11pt \
-          -V linestretch=1.2 \
-          -V papersize=a4 \
-          -V documentclass=article \
-          --metadata title="Dokumentasi Website Portfolio Rafi Pramana Putra" \
-          --metadata author="Rafi Pramana Putra" \
-          --metadata date="$(date +'%B %Y')" || \
-        # Fallback to pdflatex if xelatex fails
+        # Use pdflatex directly (faster than xelatex)
         pandoc "DOKUMENTASI_CLEAN.md" \
           -o "Dokumentasi_Portfolio_Rafi_Pramana_Putra.pdf" \
           --from markdown \
@@ -176,7 +81,7 @@ jobs:
           --highlight-style=breezedark \
           --include-in-header=latex-header.tex \
           --toc \
-          --toc-depth=3 \
+          --toc-depth=2 \
           --number-sections \
           -V geometry:margin=2.5cm \
           -V fontsize=11pt \
