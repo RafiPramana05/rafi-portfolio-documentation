@@ -149,9 +149,150 @@ Website ini menggabungkan aesthetic design dengan functional requirements, creat
 
 &nbsp;
 
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ---
 
 Website menggunakan struktur standar Laravel dengan organized file system yang memisahkan concerns dan memudahkan maintenance:
+
+```
+laravel/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── AdminController.php
+│   │   │   ├── ContactController.php
+│   │   │   ├── PortofolioController.php
+│   │   │   └── ProjectController.php
+│   │   ├── Middleware/
+│   │   │   ├── Authenticate.php
+│   │   │   └── VerifyCsrfToken.php
+│   │   └── Requests/
+│   │       ├── ContactRequest.php
+│   │       └── ProjectRequest.php
+│   ├── Models/
+│   │   ├── Admin.php
+│   │   ├── Contact.php
+│   │   ├── Project.php
+│   │   └── User.php
+│   ├── Providers/
+│   │   ├── AppServiceProvider.php
+│   │   └── RouteServiceProvider.php
+│   └── Services/
+│       ├── ProjectService.php
+│       └── ContactService.php
+├── bootstrap/
+│   ├── app.php
+│   └── cache/
+├── config/
+│   ├── app.php
+│   ├── database.php
+│   ├── mail.php
+│   └── session.php
+├── database/
+│   ├── migrations/
+│   │   ├── 2024_01_01_000000_create_users_table.php
+│   │   ├── 2024_01_02_000000_create_admins_table.php
+│   │   ├── 2024_01_03_000000_create_projects_table.php
+│   │   └── 2024_01_04_000000_create_contacts_table.php
+│   ├── seeders/
+│   │   ├── AdminSeeder.php
+│   │   ├── ProjectSeeder.php
+│   │   └── DatabaseSeeder.php
+│   └── sqlite/
+│       └── database.sqlite
+├── public/
+│   ├── build/
+│   │   ├── assets/
+│   │   │   ├── app-[hash].css
+│   │   │   └── app-[hash].js
+│   │   └── manifest.json
+│   ├── images/
+│   │   ├── portfolio/
+│   │   ├── projects/
+│   │   └── backgrounds/
+│   ├── favicon.ico
+│   └── index.php
+├── resources/
+│   ├── views/
+│   │   ├── layouts/
+│   │   │   ├── app.blade.php
+│   │   │   └── admin.blade.php
+│   │   ├── components/
+│   │   │   ├── navbar.blade.php
+│   │   │   ├── footer.blade.php
+│   │   │   └── project-card.blade.php
+│   │   ├── admin/
+│   │   │   ├── dashboard.blade.php
+│   │   │   ├── projects/
+│   │   │   │   ├── index.blade.php
+│   │   │   │   ├── create.blade.php
+│   │   │   │   └── edit.blade.php
+│   │   │   └── messages/
+│   │   │       ├── index.blade.php
+│   │   │       └── show.blade.php
+│   │   ├── portofolio.blade.php
+│   │   ├── project.blade.php
+│   │   └── contact.blade.php
+│   ├── css/
+│   │   ├── app.css
+│   │   └── admin.css
+│   ├── js/
+│   │   ├── app.js
+│   │   ├── admin.js
+│   │   └── animations.js
+│   └── lang/
+│       └── en/
+├── routes/
+│   ├── web.php
+│   ├── api.php
+│   └── console.php
+├── storage/
+│   ├── app/
+│   │   ├── public/
+│   │   │   ├── projects/
+│   │   │   └── uploads/
+│   │   └── private/
+│   ├── framework/
+│   │   ├── cache/
+│   │   ├── sessions/
+│   │   └── views/
+│   └── logs/
+│       └── laravel.log
+├── tests/
+│   ├── Feature/
+│   │   ├── AdminTest.php
+│   │   ├── ProjectTest.php
+│   │   └── ContactTest.php
+│   └── Unit/
+│       ├── ProjectModelTest.php
+│       └── ContactModelTest.php
+├── vendor/
+├── .env
+├── .env.example
+├── .gitignore
+├── artisan
+├── composer.json
+├── composer.lock
+├── package.json
+├── phpunit.xml
+├── README.md
+└── vite.config.js
+```
 
 **Core Application Structure:**
 - **app/**: Berisi logic utama aplikasi termasuk Models, Controllers, dan service classes
@@ -338,7 +479,74 @@ Aplikasi menggunakan **Model-View-Controller (MVC)** architecture pattern yang m
 
 &nbsp;
 
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ---
+
+```javascript
+// vite.config.js
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+                'resources/css/admin.css',
+                'resources/js/admin.js'
+            ],
+            refresh: true,
+        }),
+    ],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vendor: ['axios'],
+                    admin: ['resources/js/admin.js'],
+                    animations: ['resources/js/animations.js']
+                }
+            }
+        },
+        cssCodeSplit: true,
+        sourcemap: false,
+        minify: 'terser',
+        terserOptions: {
+            compress: {
+                drop_console: true,
+                drop_debugger: true
+            }
+        }
+    },
+    server: {
+        hmr: {
+            host: 'localhost'
+        }
+    },
+    resolve: {
+        alias: {
+            '@': '/resources/js',
+            '~': '/resources/css'
+        }
+    }
+});
+```
 
 Build configuration menggunakan Vite untuk modern frontend tooling yang provides:
 
@@ -384,7 +592,139 @@ Build configuration menggunakan Vite untuk modern frontend tooling yang provides
 
 &nbsp;
 
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ---
+
+```php
+<?php
+// app/Models/User.php
+namespace App\Models;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+    use HasApiTokens, HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'profile_picture',
+        'bio',
+        'phone',
+        'location',
+        'website',
+        'linkedin',
+        'github',
+        'twitter',
+        'is_active',
+        'last_login_at',
+        'email_verified_at'
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'last_login_at' => 'datetime',
+        'is_active' => 'boolean',
+        'password' => 'hashed',
+    ];
+
+    /**
+     * Get the full name attribute.
+     */
+    public function getFullNameAttribute()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get the profile picture URL.
+     */
+    public function getProfilePictureUrlAttribute()
+    {
+        return $this->profile_picture 
+            ? asset('storage/' . $this->profile_picture)
+            : asset('images/default-avatar.png');
+    }
+
+    /**
+     * Scope a query to only include active users.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    /**
+     * Update last login timestamp.
+     */
+    public function updateLastLogin()
+    {
+        $this->update(['last_login_at' => now()]);
+    }
+
+    /**
+     * Get user's social media links.
+     */
+    public function getSocialLinksAttribute()
+    {
+        return collect([
+            'linkedin' => $this->linkedin,
+            'github' => $this->github,
+            'twitter' => $this->twitter,
+            'website' => $this->website,
+        ])->filter()->toArray();
+    }
+
+    /**
+     * Check if user has completed profile.
+     */
+    public function hasCompletedProfile()
+    {
+        return $this->bio && $this->phone && $this->location;
+    }
+}
+```
 
 Model User menghandle authentication dan user management dengan Laravel's built-in authentication system. Key features meliputi:
 
@@ -422,7 +762,259 @@ Model ini mengextend Laravel's Authenticatable class yang provides comprehensive
 
 &nbsp;
 
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ---
+
+```php
+<?php
+// app/Models/Project.php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+
+class Project extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'title',
+        'description',
+        'type',
+        'start_date',
+        'end_date',
+        'location',
+        'organization',
+        'role',
+        'achievements',
+        'skills',
+        'tags',
+        'external_link',
+        'github_link',
+        'demo_link',
+        'image',
+        'icon',
+        'gradient_from',
+        'gradient_to',
+        'is_featured',
+        'is_active',
+        'order',
+        'meta_title',
+        'meta_description'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'skills' => 'array',
+        'tags' => 'array',
+        'achievements' => 'array',
+        'is_featured' => 'boolean',
+        'is_active' => 'boolean',
+        'order' => 'integer'
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($project) {
+            if (empty($project->order)) {
+                $project->order = static::where('type', $project->type)->max('order') + 1;
+            }
+        });
+    }
+
+    /**
+     * Scope a query to only include active projects.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    /**
+     * Scope a query to only include featured projects.
+     */
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', true);
+    }
+
+    /**
+     * Scope a query to filter by type.
+     */
+    public function scopeByType($query, $type)
+    {
+        return $query->where('type', $type);
+    }
+
+    /**
+     * Scope a query to order by custom order.
+     */
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('order')->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Scope a query to search by title or description.
+     */
+    public function scopeSearch($query, $search)
+    {
+        return $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%")
+              ->orWhere('organization', 'like', "%{$search}%");
+        });
+    }
+
+    /**
+     * Get the gradient class attribute.
+     */
+    public function getGradientClassAttribute()
+    {
+        return "from-{$this->gradient_from} to-{$this->gradient_to}";
+    }
+
+    /**
+     * Get the formatted duration.
+     */
+    public function getDurationAttribute()
+    {
+        if (!$this->start_date) return null;
+        
+        $start = $this->start_date->format('M Y');
+        $end = $this->end_date ? $this->end_date->format('M Y') : 'Present';
+        
+        return "{$start} - {$end}";
+    }
+
+    /**
+     * Get the excerpt from description.
+     */
+    public function getExcerptAttribute()
+    {
+        return Str::limit(strip_tags($this->description), 150);
+    }
+
+    /**
+     * Get the image URL.
+     */
+    public function getImageUrlAttribute()
+    {
+        return $this->image 
+            ? asset('storage/' . $this->image)
+            : asset('images/default-project.jpg');
+    }
+
+    /**
+     * Get the icon URL.
+     */
+    public function getIconUrlAttribute()
+    {
+        return $this->icon 
+            ? asset('storage/' . $this->icon)
+            : null;
+    }
+
+    /**
+     * Get related projects.
+     */
+    public function getRelatedProjectsAttribute()
+    {
+        return static::where('type', $this->type)
+            ->where('id', '!=', $this->id)
+            ->active()
+            ->limit(3)
+            ->get();
+    }
+
+    /**
+     * Get the type label.
+     */
+    public function getTypeLabelAttribute()
+    {
+        return match($this->type) {
+            'project' => 'Project',
+            'experience' => 'Experience',
+            'organization' => 'Organization',
+            default => ucfirst($this->type)
+        };
+    }
+
+    /**
+     * Check if project is current.
+     */
+    public function isCurrent()
+    {
+        return !$this->end_date || $this->end_date->isFuture();
+    }
+
+    /**
+     * Get all unique tags.
+     */
+    public static function getAllTags()
+    {
+        return static::active()
+            ->pluck('tags')
+            ->flatten()
+            ->unique()
+            ->sort()
+            ->values();
+    }
+
+    /**
+     * Get all unique skills.
+     */
+    public static function getAllSkills()
+    {
+        return static::active()
+            ->pluck('skills')
+            ->flatten()
+            ->unique()
+            ->sort()
+            ->values();
+    }
+}
+```
 
 Model Project adalah core model untuk content management yang menghandle projects, experiences, dan organizational involvement:
 
@@ -556,7 +1148,240 @@ System ini designed untuk secure administrative access while maintaining usabili
 
 &nbsp;
 
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ---
+
+```php
+<?php
+// app/Http/Controllers/PortofolioController.php
+namespace App\Http\Controllers;
+
+use App\Models\Project;
+use App\Models\Contact;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+
+class PortofolioController extends Controller
+{
+    /**
+     * Display the homepage.
+     */
+    public function index()
+    {
+        try {
+            // Cache homepage data for 30 minutes
+            $data = Cache::remember('homepage_data', 30 * 60, function () {
+                return [
+                    'featuredProjects' => Project::active()
+                        ->featured()
+                        ->ordered()
+                        ->limit(6)
+                        ->get(),
+                    
+                    'recentExperiences' => Project::active()
+                        ->byType('experience')
+                        ->ordered()
+                        ->limit(4)
+                        ->get(),
+                    
+                    'activeOrganizations' => Project::active()
+                        ->byType('organization')
+                        ->ordered()
+                        ->limit(3)
+                        ->get(),
+                    
+                    'skillsCount' => Project::active()
+                        ->pluck('skills')
+                        ->flatten()
+                        ->unique()
+                        ->count(),
+                    
+                    'projectsCount' => Project::active()
+                        ->byType('project')
+                        ->count(),
+                    
+                    'experiencesCount' => Project::active()
+                        ->byType('experience')
+                        ->count(),
+                    
+                    'organizationsCount' => Project::active()
+                        ->byType('organization')
+                        ->count(),
+                ];
+            });
+
+            // Recent contact messages count (for admin badge)
+            $unreadMessagesCount = Contact::where('status', 'unread')
+                ->where('created_at', '>=', now()->subDays(7))
+                ->count();
+
+            return view('portofolio', array_merge($data, [
+                'unreadMessagesCount' => $unreadMessagesCount,
+                'pageTitle' => 'Rafi Pramana Putra - Law Student & Community Leader',
+                'pageDescription' => 'Portfolio website showcasing legal expertise, academic achievements, and community leadership by Rafi Pramana Putra.',
+                'currentYear' => now()->year,
+            ]));
+
+        } catch (\Exception $e) {
+            Log::error('Homepage error: ' . $e->getMessage());
+            
+            return view('portofolio', [
+                'featuredProjects' => collect(),
+                'recentExperiences' => collect(),
+                'activeOrganizations' => collect(),
+                'skillsCount' => 0,
+                'projectsCount' => 0,
+                'experiencesCount' => 0,
+                'organizationsCount' => 0,
+                'unreadMessagesCount' => 0,
+                'pageTitle' => 'Rafi Pramana Putra - Portfolio',
+                'pageDescription' => 'Professional portfolio website.',
+                'currentYear' => now()->year,
+            ]);
+        }
+    }
+
+    /**
+     * Download CV file.
+     */
+    public function downloadCV()
+    {
+        $cvPath = storage_path('app/private/cv/Rafi_Pramana_Putra_CV.pdf');
+        
+        if (!file_exists($cvPath)) {
+            abort(404, 'CV file not found');
+        }
+
+        // Log CV download for analytics
+        Log::info('CV downloaded', [
+            'ip' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+            'timestamp' => now()
+        ]);
+
+        return response()->download($cvPath, 'Rafi_Pramana_Putra_CV.pdf');
+    }
+
+    /**
+     * Get homepage statistics for API.
+     */
+    public function getStats()
+    {
+        $stats = Cache::remember('homepage_stats', 60 * 60, function () {
+            return [
+                'total_projects' => Project::active()->count(),
+                'featured_projects' => Project::active()->featured()->count(),
+                'active_experiences' => Project::active()->byType('experience')->count(),
+                'organizations' => Project::active()->byType('organization')->count(),
+                'unique_skills' => Project::active()
+                    ->pluck('skills')
+                    ->flatten()
+                    ->unique()
+                    ->count(),
+                'total_messages' => Contact::count(),
+                'unread_messages' => Contact::where('status', 'unread')->count(),
+                'last_updated' => Project::latest()->first()?->updated_at,
+            ];
+        });
+
+        return response()->json($stats);
+    }
+
+    /**
+     * Get featured content for home page sections.
+     */
+    public function getFeaturedContent()
+    {
+        $content = Cache::remember('featured_content', 45 * 60, function () {
+            return [
+                'hero_projects' => Project::active()
+                    ->featured()
+                    ->byType('project')
+                    ->limit(3)
+                    ->get()
+                    ->map(function ($project) {
+                        return [
+                            'id' => $project->id,
+                            'title' => $project->title,
+                            'excerpt' => $project->excerpt,
+                            'image_url' => $project->image_url,
+                            'gradient_class' => $project->gradient_class,
+                            'type_label' => $project->type_label,
+                            'duration' => $project->duration,
+                        ];
+                    }),
+                
+                'recent_achievements' => Project::active()
+                    ->whereNotNull('achievements')
+                    ->latest()
+                    ->limit(5)
+                    ->get()
+                    ->map(function ($project) {
+                        return [
+                            'title' => $project->title,
+                            'achievements' => $project->achievements,
+                            'organization' => $project->organization,
+                            'date' => $project->start_date,
+                        ];
+                    }),
+                
+                'skill_categories' => Project::active()
+                    ->pluck('skills')
+                    ->flatten()
+                    ->unique()
+                    ->groupBy(function ($skill) {
+                        // Group skills by category
+                        $categories = [
+                            'Legal' => ['Constitutional Law', 'Criminal Law', 'Legal Research', 'Legal Writing'],
+                            'Leadership' => ['Team Leadership', 'Project Management', 'Community Organizing'],
+                            'Technical' => ['Research', 'Analysis', 'Documentation', 'Presentation'],
+                        ];
+                        
+                        foreach ($categories as $category => $skills) {
+                            if (in_array($skill, $skills)) {
+                                return $category;
+                            }
+                        }
+                        return 'Other';
+                    })
+                    ->map(function ($skills) {
+                        return $skills->take(8);
+                    }),
+            ];
+        });
+
+        return response()->json($content);
+    }
+
+    /**
+     * Clear homepage cache.
+     */
+    public function clearCache()
+    {
+        Cache::forget('homepage_data');
+        Cache::forget('homepage_stats');
+        Cache::forget('featured_content');
+        
+        return response()->json(['message' => 'Cache cleared successfully']);
+    }
+}
+```
 
 PortofolioController menghandle homepage presentation dengan optimized data retrieval dan content organization:
 
@@ -736,7 +1561,152 @@ Controller ini ensures reliable communication channel while maintaining security
 
 &nbsp;
 
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ---
+
+```php
+<?php
+// routes/web.php
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PortofolioController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AdminController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+// Public Homepage Routes
+Route::get('/', [PortofolioController::class, 'index'])->name('homepage');
+Route::get('/home', [PortofolioController::class, 'index'])->name('home');
+
+// Portfolio Content Routes
+Route::prefix('portfolio')->group(function () {
+    Route::get('/', [ProjectController::class, 'index'])->name('portfolio.index');
+    Route::get('/projects', [ProjectController::class, 'projects'])->name('portfolio.projects');
+    Route::get('/experiences', [ProjectController::class, 'experiences'])->name('portfolio.experiences');
+    Route::get('/organizations', [ProjectController::class, 'organizations'])->name('portfolio.organizations');
+    Route::get('/search', [ProjectController::class, 'search'])->name('portfolio.search');
+});
+
+// Individual Project Routes
+Route::prefix('project')->group(function () {
+    Route::get('/', [ProjectController::class, 'index'])->name('project.index');
+    Route::get('/{project}', [ProjectController::class, 'show'])->name('project.show');
+    Route::get('/{project}/gallery', [ProjectController::class, 'gallery'])->name('project.gallery');
+    Route::get('/type/{type}', [ProjectController::class, 'byType'])->name('project.type');
+    Route::get('/tag/{tag}', [ProjectController::class, 'byTag'])->name('project.tag');
+});
+
+// Contact Routes
+Route::prefix('contact')->group(function () {
+    Route::get('/', [ContactController::class, 'index'])->name('contact.index');
+    Route::post('/', [ContactController::class, 'store'])->name('contact.store');
+    Route::post('/quick', [ContactController::class, 'quickContact'])->name('contact.quick');
+});
+
+// Utility Routes
+Route::get('/cv/download', [PortofolioController::class, 'downloadCV'])->name('cv.download');
+Route::get('/cv/preview', [PortofolioController::class, 'previewCV'])->name('cv.preview');
+
+// API Routes for Frontend
+Route::prefix('api')->group(function () {
+    Route::get('/stats', [PortofolioController::class, 'getStats'])->name('api.stats');
+    Route::get('/featured', [PortofolioController::class, 'getFeaturedContent'])->name('api.featured');
+    Route::get('/projects/search', [ProjectController::class, 'apiSearch'])->name('api.projects.search');
+    Route::get('/projects/filter', [ProjectController::class, 'apiFilter'])->name('api.projects.filter');
+});
+
+// SEO and Sitemap Routes
+Route::get('/sitemap.xml', [PortofolioController::class, 'sitemap'])->name('sitemap');
+Route::get('/robots.txt', [PortofolioController::class, 'robots'])->name('robots');
+
+// Admin Authentication Routes
+Route::prefix('admin')->group(function () {
+    Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.login');
+    Route::post('/login', [AdminController::class, 'authenticate'])->name('admin.authenticate');
+    Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    
+    // Protected Admin Routes
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard.main');
+        
+        // Project Management
+        Route::prefix('projects')->group(function () {
+            Route::get('/', [AdminController::class, 'projectsIndex'])->name('admin.projects.index');
+            Route::get('/create', [AdminController::class, 'projectsCreate'])->name('admin.projects.create');
+            Route::post('/', [AdminController::class, 'projectsStore'])->name('admin.projects.store');
+            Route::get('/{project}/edit', [AdminController::class, 'projectsEdit'])->name('admin.projects.edit');
+            Route::put('/{project}', [AdminController::class, 'projectsUpdate'])->name('admin.projects.update');
+            Route::delete('/{project}', [AdminController::class, 'projectsDestroy'])->name('admin.projects.destroy');
+            Route::put('/{project}/restore', [AdminController::class, 'projectsRestore'])->name('admin.projects.restore');
+            Route::delete('/{project}/force', [AdminController::class, 'projectsForceDelete'])->name('admin.projects.force-delete');
+            Route::post('/{project}/toggle-featured', [AdminController::class, 'toggleFeatured'])->name('admin.projects.toggle-featured');
+            Route::post('/{project}/toggle-active', [AdminController::class, 'toggleActive'])->name('admin.projects.toggle-active');
+        });
+        
+        // Message Management
+        Route::prefix('messages')->group(function () {
+            Route::get('/', [AdminController::class, 'messagesIndex'])->name('admin.messages.index');
+            Route::get('/{contact}', [AdminController::class, 'messagesShow'])->name('admin.messages.show');
+            Route::put('/{contact}/status', [AdminController::class, 'updateMessageStatus'])->name('admin.messages.status');
+            Route::delete('/{contact}', [AdminController::class, 'messagesDestroy'])->name('admin.messages.destroy');
+            Route::post('/bulk-action', [AdminController::class, 'messagesBulkAction'])->name('admin.messages.bulk');
+        });
+        
+        // Settings
+        Route::prefix('settings')->group(function () {
+            Route::get('/', [AdminController::class, 'settings'])->name('admin.settings');
+            Route::put('/profile', [AdminController::class, 'updateProfile'])->name('admin.settings.profile');
+            Route::put('/password', [AdminController::class, 'updatePassword'])->name('admin.settings.password');
+            Route::put('/site', [AdminController::class, 'updateSiteSettings'])->name('admin.settings.site');
+        });
+        
+        // Media Management
+        Route::prefix('media')->group(function () {
+            Route::get('/', [AdminController::class, 'mediaIndex'])->name('admin.media.index');
+            Route::post('/upload', [AdminController::class, 'mediaUpload'])->name('admin.media.upload');
+            Route::delete('/{file}', [AdminController::class, 'mediaDelete'])->name('admin.media.delete');
+        });
+        
+        // Analytics and Reports
+        Route::prefix('analytics')->group(function () {
+            Route::get('/', [AdminController::class, 'analytics'])->name('admin.analytics');
+            Route::get('/export', [AdminController::class, 'exportData'])->name('admin.analytics.export');
+            Route::post('/clear-cache', [AdminController::class, 'clearCache'])->name('admin.cache.clear');
+        });
+    });
+});
+
+// Fallback route for 404 handling
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
+```
 
 Public routing system designed untuk optimal user experience dan SEO dengan clean, intuitive URL structure:
 
@@ -1066,7 +2036,328 @@ Animation system creates engaging user experience while maintaining accessibilit
 
 &nbsp;
 
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 ---
+
+```javascript
+// resources/js/app.js
+import './bootstrap';
+import './animations';
+import './contact-form';
+import './project-filter';
+
+// Global App Configuration
+window.App = {
+    debug: false,
+    apiUrl: '/api',
+    csrfToken: document.querySelector('meta[name="csrf-token"]')?.getAttribute('content'),
+    
+    // Utility functions
+    utils: {
+        // Debounce function for search inputs
+        debounce: (func, wait) => {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        },
+        
+        // Format date helper
+        formatDate: (date) => {
+            return new Date(date).toLocaleDateString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        },
+        
+        // Scroll to element with smooth animation
+        scrollToElement: (element, offset = 0) => {
+            const elementPosition = element.offsetTop - offset;
+            window.scrollTo({
+                top: elementPosition,
+                behavior: 'smooth'
+            });
+        },
+        
+        // Show loading state
+        showLoading: (element) => {
+            element.classList.add('loading');
+            element.innerHTML = '<div class="spinner"></div>';
+        },
+        
+        // Hide loading state
+        hideLoading: (element, originalContent) => {
+            element.classList.remove('loading');
+            element.innerHTML = originalContent;
+        }
+    }
+};
+
+// DOM Content Loaded Event
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Portfolio App Initialized');
+    
+    // Initialize all modules
+    initializeNavigation();
+    initializeScrollEffects();
+    initializeContactForm();
+    initializeProjectFilters();
+    initializeImageLazyLoading();
+    initializeTooltips();
+    initializeModalHandlers();
+    initializeAnalytics();
+});
+
+// Navigation Module
+function initializeNavigation() {
+    const navbar = document.querySelector('.navbar');
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Mobile menu toggle
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+            document.body.classList.toggle('nav-open');
+        });
+    }
+    
+    // Smooth scrolling for navigation links
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    App.utils.scrollToElement(target, 80);
+                    
+                    // Close mobile menu if open
+                    if (navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        navToggle.classList.remove('active');
+                        document.body.classList.remove('nav-open');
+                    }
+                }
+            }
+        });
+    });
+    
+    // Navbar scroll effect
+    if (navbar) {
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            // Hide/show navbar on scroll
+            if (scrollTop > lastScrollTop && scrollTop > 500) {
+                navbar.classList.add('hidden');
+            } else {
+                navbar.classList.remove('hidden');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+    }
+}
+
+// Contact Form Module
+function initializeContactForm() {
+    const contactForm = document.querySelector('#contactForm');
+    const submitButton = document.querySelector('#submitButton');
+    const successMessage = document.querySelector('#successMessage');
+    const errorMessage = document.querySelector('#errorMessage');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Show loading state
+            const originalButtonText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Mengirim...';
+            
+            try {
+                const formData = new FormData(contactForm);
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': App.csrfToken,
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showSuccessMessage('Pesan berhasil dikirim! Terima kasih atas pesan Anda.');
+                    contactForm.reset();
+                    
+                    // Send analytics event
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'contact_form_submit', {
+                            event_category: 'engagement',
+                            event_label: 'success'
+                        });
+                    }
+                } else {
+                    throw new Error(result.message || 'Gagal mengirim pesan');
+                }
+                
+            } catch (error) {
+                console.error('Contact form error:', error);
+                showErrorMessage('Terjadi kesalahan. Silakan coba lagi.');
+                
+                // Send analytics event
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'contact_form_error', {
+                        event_category: 'error',
+                        event_label: error.message
+                    });
+                }
+            } finally {
+                // Reset button state
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            }
+        });
+    }
+    
+    function showSuccessMessage(message) {
+        if (successMessage) {
+            successMessage.textContent = message;
+            successMessage.classList.add('show');
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+        }
+    }
+    
+    function showErrorMessage(message) {
+        if (errorMessage) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 5000);
+        }
+    }
+}
+
+// Project Filter Module
+function initializeProjectFilters() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+    const searchInput = document.querySelector('#projectSearch');
+    
+    // Filter by category
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const filter = button.dataset.filter;
+            
+            // Update active button
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Filter projects
+            filterProjects(filter);
+            
+            // Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'project_filter', {
+                    event_category: 'navigation',
+                    event_label: filter
+                });
+            }
+        });
+    });
+    
+    // Search functionality
+    if (searchInput) {
+        const debouncedSearch = App.utils.debounce((query) => {
+            searchProjects(query);
+        }, 300);
+        
+        searchInput.addEventListener('input', (e) => {
+            debouncedSearch(e.target.value);
+        });
+    }
+    
+    function filterProjects(category) {
+        projectCards.forEach(card => {
+            const cardCategory = card.dataset.category;
+            
+            if (category === 'all' || cardCategory === category) {
+                card.style.display = 'block';
+                card.classList.add('fade-in');
+            } else {
+                card.style.display = 'none';
+                card.classList.remove('fade-in');
+            }
+        });
+    }
+    
+    function searchProjects(query) {
+        projectCards.forEach(card => {
+            const title = card.querySelector('.project-title')?.textContent.toLowerCase();
+            const description = card.querySelector('.project-description')?.textContent.toLowerCase();
+            const tags = card.dataset.tags?.toLowerCase() || '';
+            
+            const matchesSearch = !query || 
+                title.includes(query.toLowerCase()) ||
+                description.includes(query.toLowerCase()) ||
+                tags.includes(query.toLowerCase());
+                
+            if (matchesSearch) {
+                card.style.display = 'block';
+                card.classList.add('fade-in');
+            } else {
+                card.style.display = 'none';
+                card.classList.remove('fade-in');
+            }
+        });
+    }
+}
+
+// Export for use in other modules
+window.PortfolioApp = {
+    utils: App.utils,
+    initializeNavigation,
+    initializeScrollEffects,
+    initializeContactForm,
+    initializeProjectFilters
+};
+```
 
 Frontend JavaScript provides enhanced interactivity dan smooth user experience dengan modern ES6+ patterns:
 
