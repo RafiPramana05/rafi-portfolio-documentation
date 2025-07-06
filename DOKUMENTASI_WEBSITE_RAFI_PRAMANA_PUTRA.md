@@ -767,7 +767,25 @@ Controller ini ensures reliable communication channel while maintaining security
 
 ### 6.1 Public Routes dan URL Structure
 
-**[SCREENSHOT BAGIAN: File routes/web.php terbuka di editor, tunjukkan public routes section dengan clean URL patterns]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`n
+**[SCREENSHOT BAGIAN: File routes/web.php terbuka di editor, tunjukkan public routes section dengan clean URL patterns]**
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
 &nbsp;
 
 &nbsp;
@@ -858,7 +876,27 @@ Public routing system designed untuk optimal user experience dan SEO dengan clea
 
 ### 6.2 Admin Routes dan Security
 
-**[SCREENSHOT BAGIAN: File routes/web.php, fokus pada admin routes group dengan middleware protection]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nAdmin routing system implements comprehensive security measures dengan organized route grouping:
+**[SCREENSHOT BAGIAN: File routes/web.php, fokus pada admin routes group dengan middleware protection]**
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
+
+Admin routing system implements comprehensive security measures dengan organized route grouping:
 
 **Authentication Routes:**
 - **Login Access**: `/admin/login` - Secure login page dengan CSRF protection
@@ -889,7 +927,27 @@ System ini ensures secure administrative access while maintaining clean organiza
 
 ### 7.1 Layout System dan Component Architecture
 
-**[SCREENSHOT BAGIAN: File resources/views/layouts/app.blade.php di editor, tunjukkan struktur layout dengan sections dan includes]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nLayout system menggunakan Blade templating engine dengan modular component architecture untuk maintainable dan reusable code:
+**[SCREENSHOT BAGIAN: File resources/views/layouts/app.blade.php di editor, tunjukkan struktur layout dengan sections dan includes]**
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
+
+Layout system menggunakan Blade templating engine dengan modular component architecture untuk maintainable dan reusable code:
 
 **Master Layout Features:**
 - **Dynamic Head Section**: Flexible meta tags, title, dan description untuk SEO optimization
@@ -941,7 +999,27 @@ Layout system provides solid foundation untuk consistent design while allowing f
 
 ### 7.3 Admin Panel Views dan Interface Design
 
-**[SCREENSHOT BAGIAN: Admin panel dashboard view di browser, tunjukkan statistics cards dan navigation menu]**`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n&nbsp;`n`n---`n`nAdmin panel menggunakan clean, functional design yang prioritizes usability dan efficiency:
+**[SCREENSHOT BAGIAN: Admin panel dashboard view di browser, tunjukkan statistics cards dan navigation menu]**
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+---
+
+Admin panel menggunakan clean, functional design yang prioritizes usability dan efficiency:
 
 **Dashboard Interface:**
 - **Statistics Overview**: Visual statistics cards showing project counts, message status, dan activity metrics
