@@ -88,7 +88,8 @@ Website ini menggabungkan aesthetic design dengan functional requirements, creat
 
 Website menggunakan struktur standar Laravel dengan organized file system yang memisahkan concerns dan memudahkan maintenance:
 
-```bash`nlaravel/
+```
+laravel/
 ├── app/
 │   ├── Http/Controllers/
 │   │   ├── AdminController.php
@@ -122,7 +123,9 @@ Website menggunakan struktur standar Laravel dengan organized file system yang m
 ├── composer.json
 ├── package.json
 └── vite.config.js
-```\n\n**Core Application Structure:**
+```
+
+**Core Application Structure:**
 - **app/**: Berisi logic utama aplikasi termasuk Models, Controllers, dan service classes
 - **resources/**: Menyimpan view templates, styling files, dan frontend assets
 - **database/**: Contains database migrations, seeders, dan schema definitions
