@@ -88,8 +88,7 @@ Website ini menggabungkan aesthetic design dengan functional requirements, creat
 
 Website menggunakan struktur standar Laravel dengan organized file system yang memisahkan concerns dan memudahkan maintenance:
 
-```bash
-laravel/
+```bash`nlaravel/
 ├── app/
 │   ├── Http/Controllers/
 │   │   ├── AdminController.php
@@ -123,7 +122,7 @@ laravel/
 ├── composer.json
 ├── package.json
 └── vite.config.js
-```bash`n**Core Application Structure:**
+```\n\n**Core Application Structure:**
 - **app/**: Berisi logic utama aplikasi termasuk Models, Controllers, dan service classes
 - **resources/**: Menyimpan view templates, styling files, dan frontend assets
 - **database/**: Contains database migrations, seeders, dan schema definitions
@@ -328,7 +327,7 @@ export default defineConfig({
         }
     }
 });
-```bash`nBuild configuration menggunakan Vite untuk modern frontend tooling yang provides:
+```\n\nBuild configuration menggunakan Vite untuk modern frontend tooling yang provides:
 
 **Development Features:**
 - **Hot Module Replacement**: Instant updates tanpa full page reload during development
@@ -391,7 +390,7 @@ class User extends Authenticatable
         $this->update(['last_login_at' => now()]);
     }
 }
-```javascript`nModel User menghandle authentication dan user management dengan Laravel's built-in authentication system. Key features meliputi:
+```\n\nModel User menghandle authentication dan user management dengan Laravel's built-in authentication system. Key features meliputi:
 
 **Security Features:**
 - **Password Hashing**: Automatic bcrypt hashing untuk secure password storage
@@ -469,7 +468,7 @@ class Project extends Model
             : asset('images/default-project.jpg');
     }
 }
-```bash`nModel Project adalah core model untuk content management yang menghandle projects, experiences, dan organizational involvement:
+```\n\nModel Project adalah core model untuk content management yang menghandle projects, experiences, dan organizational involvement:
 
 **Content Management Features:**
 - **Flexible Content Types**: Single model handles projects, experiences, dan organizations melalui type field
@@ -601,7 +600,7 @@ class PortofolioController extends Controller
         ]);
     }
 }
-```bash`nPortofolioController menghandle homepage presentation dengan optimized data retrieval dan content organization:
+```\n\nPortofolioController menghandle homepage presentation dengan optimized data retrieval dan content organization:
 
 **Homepage Data Management:**
 - **Content Curation**: Selective display dari featured projects, recent experiences, dan active organizations
@@ -1501,6 +1500,9 @@ Website Portofolio Rafi Pramana Putra berhasil dikembangkan sebagai platform dig
 - Automated documentation system
 
 Platform ini menyediakan foundation yang solid untuk professional growth dengan maintaining technical excellence dan user experience quality yang optimal.`n`n
+
+
+
 
 
 
