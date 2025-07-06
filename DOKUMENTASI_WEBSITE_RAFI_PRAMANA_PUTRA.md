@@ -204,7 +204,9 @@ laravel/
         "phpunit/phpunit": "^11.5.3"
     }
 }
-```json`n**Backend Technology Stack:**
+```
+
+**Backend Technology Stack:**
 - **Laravel Framework 12.0**: Latest version dengan improved performance, security enhancements, dan modern PHP features
 - **PHP 8.2+**: Leveraging latest PHP features seperti readonly properties, enums, dan performance improvements
 - **Laravel Tinker**: Interactive shell untuk debugging, testing, dan rapid prototyping dalam development
@@ -248,7 +250,9 @@ laravel/
         "axios": "^1.8.2"
     }
 }
-```css`n**Frontend Technology Stack:**
+```
+
+**Frontend Technology Stack:**
 - **Vite 6.2.4**: Ultra-fast build tool dengan hot module replacement untuk development efficiency dan optimized production builds
 - **TailwindCSS 4.0**: Utility-first CSS framework untuk rapid UI development dengan consistent design system
 - **Laravel Vite Plugin**: Seamless integration antara Laravel backend dan Vite frontend build process
@@ -330,7 +334,9 @@ export default defineConfig({
         }
     }
 });
-```\n\nBuild configuration menggunakan Vite untuk modern frontend tooling yang provides:
+```
+
+Build configuration menggunakan Vite untuk modern frontend tooling yang provides:
 
 **Development Features:**
 - **Hot Module Replacement**: Instant updates tanpa full page reload during development
@@ -393,7 +399,9 @@ class User extends Authenticatable
         $this->update(['last_login_at' => now()]);
     }
 }
-```\n\nModel User menghandle authentication dan user management dengan Laravel's built-in authentication system. Key features meliputi:
+```
+
+Model User menghandle authentication dan user management dengan Laravel's built-in authentication system. Key features meliputi:
 
 **Security Features:**
 - **Password Hashing**: Automatic bcrypt hashing untuk secure password storage
@@ -471,7 +479,9 @@ class Project extends Model
             : asset('images/default-project.jpg');
     }
 }
-```\n\nModel Project adalah core model untuk content management yang menghandle projects, experiences, dan organizational involvement:
+```
+
+Model Project adalah core model untuk content management yang menghandle projects, experiences, dan organizational involvement:
 
 **Content Management Features:**
 - **Flexible Content Types**: Single model handles projects, experiences, dan organizations melalui type field
@@ -603,7 +613,9 @@ class PortofolioController extends Controller
         ]);
     }
 }
-```\n\nPortofolioController menghandle homepage presentation dengan optimized data retrieval dan content organization:
+```
+
+PortofolioController menghandle homepage presentation dengan optimized data retrieval dan content organization:
 
 **Homepage Data Management:**
 - **Content Curation**: Selective display dari featured projects, recent experiences, dan active organizations
