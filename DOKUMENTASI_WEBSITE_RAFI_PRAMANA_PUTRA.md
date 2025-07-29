@@ -1,5 +1,5 @@
 # DOKUMENTASI WEBSITE PORTOFOLIO RAFI PRAMANA PUTRA
-Rayhan
+
 ## DAFTAR ISI
 1. [Latar Belakang dan Overview](#latar-belakang-dan-overview)
 2. [Struktur Folder dan Arsitektur](#struktur-folder-dan-arsitektur)
@@ -2312,6 +2312,4 @@ Website Portofolio Rafi Pramana Putra berhasil dikembangkan sebagai platform dig
 - Automated documentation system
 
 Platform ini menyediakan foundation yang solid untuk professional growth dengan maintaining technical excellence dan user experience quality yang optimal.
-
-tristan
 
